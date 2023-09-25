@@ -9,6 +9,7 @@ import { AnnouncementsComponent } from './announcements/announcements.component'
 import { TeamsComponent } from './teams/teams.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
+import { CompanyComponent } from './company/company.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UserRegistryComponent } from './user-registry/user-registry.component';
     AnnouncementsComponent,
     TeamsComponent,
     ProjectsComponent,
-    UserRegistryComponent
+    UserRegistryComponent,
+    CompanyComponent
   ],
   imports: [
     BrowserModule,
