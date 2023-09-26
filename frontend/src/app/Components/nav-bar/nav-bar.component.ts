@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class NavBarComponent {
 
+logOut(){
+  localStorage.setItem('isLoggedIn', 'false')
+  localStorage.setItem('isAdmin', 'false')
+}
+
+
 }
