@@ -1,8 +1,12 @@
-<div class="nav">
-  <div class="img-container" routerLink="/announcements">
-    <img src="assets/home-icon.svg" />
+<nav>
+  <div class="nav-left">
+    <img
+      class="svg-image"
+      src="assets/home-icon.svg"
+      routerLink="/announcements"
+    />
+    <span class="active-user">ACTING AS ADMIN</span>
   </div>
-  <h2 class="active-user">ACTING AS ADMIN</h2>
   <ul class="nav-links">
     <li routerLink="/announcements">Home</li>
     <li routerLink="/select-company">Company</li>
@@ -10,4 +14,4 @@
     <li routerLink="/user-registry">Users</li>
     <li (click) = 'logOut()' routerLink="/">Logout</li>
   </ul>
-</div>
+</nav>
