@@ -7,16 +7,13 @@
 </div>
 <div class = loginbox>
     <form action="/announcements">
-    <div class = inputs>
-        
-        <input #username (change)="getUsername(username.value)" class = inputfields type="text" id="username" name="username" placeholder="Username"><br><br>
-        
-        <input #password (change)="getPassword(password.value)" class = inputfields type="text" id="password" name="password" placeholder="Password"><br><br>
-        
-    </div>
-      </form>
-      <div>
-        <input class = loginbutton type="submit" value="Login">
-      </div>
+        <div class = inputs>
+            <input #username (change)="getUsername(username.value)" class = inputfields type="text" id="username" name="username" placeholder="Username"><br><br>
+            <input #password (change)="getPassword(password.value)" class = inputfields type="text" id="password" name="password" placeholder="Password"><br><br>
+        </div>
+        <div>
+            <input class = loginbutton type="submit" value="Login">
+        </div>
+    </form>
 </div>
 <button class = temp routerLink="/announcements">Go To Announcements</button>

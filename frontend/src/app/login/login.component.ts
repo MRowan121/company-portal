@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class LoginComponent {
   username: string = ""
   password: string = ""
+  user: any = {}
 
   //want to take username given from input on login page and parse through database to see if user exists
   getUsername(value: string){
@@ -21,6 +22,23 @@ export class LoginComponent {
     localStorage.setItem("password", this.password)
     console.log(this.password)
   }
+
+  // authenticateUser(userList = []){
+
+  //   for(let users in userList)
+  //   if(this.username exists in userList){
+  //     user = userbyusername in repo
+
+  //   }else{
+  //     error for no user by that username
+  //   }
+
+  //   if(this.user.password !== this.password){
+  //     error for wrong password
+  //   }
+
+  //   log user in
+  // }
 }
 
 
