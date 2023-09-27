@@ -38,6 +38,12 @@ h1 {
 }
 
 .team-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.team-card {
   display: flex;
   flex-direction: column;
   width: 300px;
