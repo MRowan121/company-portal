@@ -20,13 +20,10 @@ import { CompanyComponent } from './company/company.component';
     TeamsComponent,
     ProjectsComponent,
     UserRegistryComponent,
-    CompanyComponent
+    CompanyComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
