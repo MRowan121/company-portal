@@ -13,9 +13,9 @@ const axios = require('axios')
 export class LoginComponent implements OnInit {
   username: string = ""
   password: string = ""
+  user: any = {}
   isAdmin: Boolean = false
   isLoggedIn:Boolean = false
-  user:any = {}
   error: string = ""
   constructor(private router: Router){
 
@@ -45,6 +45,7 @@ if(localStorage.getItem('isAdmin') === null){
     this.password = value;
   }
 
+
   async validateUser(e:any){
     e.preventDefault()
     this.error = ""
@@ -64,6 +65,8 @@ if(localStorage.getItem('isAdmin') === null){
     try{
       const request = await axios.post("http://localhost:8080/users/login", userToSubmit) 
       this.user=request.data
+      localStorage.setItem('user', JSON.stringify(this.user))
+      console.log(request.data)
       this.isLoggedIn = true
 
       if(request.data.isAdmin){
@@ -76,7 +79,6 @@ if(localStorage.getItem('isAdmin') === null){
       this.error = "Login Error"
       console.log(err)
     }
-    // const result = await fetch(input = userToSubmit, "http://localhost:8080/users/login")
   }
 
 }
