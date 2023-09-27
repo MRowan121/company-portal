@@ -30,7 +30,11 @@ export class CompanyComponent implements OnInit {
         this.router.navigate(['/announcements']);
       }
     } else {
-      this.router.navigate(['/']);
+      console.log("Navigating to select company here **************");
+      //Use service not local storage.
+      //this.router.navigate(['/']);
+      this.router.navigate(['/select-company']);
+
     }
   }
 

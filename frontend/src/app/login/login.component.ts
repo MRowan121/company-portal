@@ -2,6 +2,7 @@ import { outputAst } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
+import { DataService } from '../data.service'; 
 
 
 @Component({
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   isAdmin: Boolean = false;
   isLoggedIn: Boolean = false;
   error: string = '';
-  constructor(private router: Router) {}
+  
+  constructor(private router: Router, private dataService: DataService) {}
   ngOnInit() {
     // this.isLoggedIn =
     //   localStorage.getItem('isLoggedIn') === 'true' ? true : false;
@@ -24,14 +26,16 @@ export class LoginComponent implements OnInit {
     // if (localStorage.getItem('isAdmin') === null) {
     //   localStorage.setItem('isAdmin', 'false');
     // }
-    if (this.isLoggedIn) {
-      if (this.isAdmin) {
-        this.router.navigate(['/select-company']);
-      }
-      if (!this.isAdmin) {
-        this.router.navigate(['/announcements']);
-      }
-    }
+
+
+    // if (this.isLoggedIn) {
+    //   if (this.user.admin) {
+    //     this.router.navigate(['/select-company']);
+    //   }
+    //   if (!this.user.admin) {
+    //     this.router.navigate(['/announcements']);
+    //   }
+    // }
   }
 
   getUsername(value: string) {
@@ -63,14 +67,29 @@ export class LoginComponent implements OnInit {
         'http://localhost:8080/users/login',
         userToSubmit
       );
-      this.user = request.data;
-      this.isLoggedIn = true;
 
-      if (request.data) {
-        this.isAdmin = true;
-      }
-      localStorage.setItem('isLoggedIn', 'true');
-      this.router.navigate(['select-company']);
+      //Setting the user from backend**************
+      this.user = request.data;
+      this.dataService.setUser(this.user);
+      console.log(this.user.admin);
+      console.log(this.user);
+
+
+      //Routing after logging
+      this.isLoggedIn = true;
+      
+        if (this.user.admin) {
+          console.log("Route for select-company");
+          this.router.navigate(['/select-company']);
+        }
+        if (!this.user.admin) {
+          console.log("Route for announcments");
+          this.router.navigate(['/announcements']);
+        }
+
+      //this.router.navigate(['/select-company']);
+
+
     } catch (err) {
       this.error = 'Login Error';
       console.log(err);
