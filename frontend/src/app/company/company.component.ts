@@ -39,10 +39,6 @@ export class CompanyComponent implements OnInit {
     this.companyNames = request.data;
   }
 
-  // getCompanyId() {
-  //   localStorage.getItem('user');
-  // }
-
   chooseCompany(value: string) {
     const selectedCompany = this.user.companies.filter(
       (company: any) => company.name === value
