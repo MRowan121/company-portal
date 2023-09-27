@@ -5,7 +5,11 @@
     <button class="new-team-btn">New</button>
   </div>
   <div class="team-container">
-    <div class="team-card" *ngFor="let team of teams">
+    <div
+      class="team-card"
+      *ngFor="let team of teams"
+      (click)="openProjects(team)"
+    >
       <div class="card-header">
         <p class="team-name">{{ team.name }}</p>
         <p># of Projects: {{ team.projects.length }}</p>

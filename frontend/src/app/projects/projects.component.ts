@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import axios from 'axios';
 
 @Component({
@@ -8,21 +9,17 @@ import axios from 'axios';
 })
 export class ProjectsComponent implements OnInit {
   projects: any[] = [];
-  constructor() {}
-
-  ngOnInit() {
-    this.getProjects();
+  teamName: string = '';
+  constructor(private router: Router) {
+    const input = this.router.getCurrentNavigation();
+    const receivedProjects = input?.extras?.state?.['projects'];
+    if (receivedProjects) this.projects = receivedProjects;
+    const receivedTeamName = input?.extras?.state?.['teamName'];
+    if (receivedTeamName) this.teamName = receivedTeamName;
   }
 
-  async getProjects() {
-    const companyId = localStorage.getItem('selectedCompanyId');
-    // Hard coded this for testing. Need functionality to get id of selected team.
-    const teamId = 1;
-    console.log(companyId);
-    const request = await axios.get(
-      `http://localhost:8080/company/${companyId}/teams/${teamId}/projects`
-    );
-    this.projects = request.data;
+  ngOnInit() {
     console.log(this.projects);
+    console.log(this.teamName);
   }
 }

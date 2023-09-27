@@ -4,6 +4,20 @@
   align-items: center;
 }
 
+.back-Btn {
+  color: #1ba098;
+  font-size: 24px;
+  font-family: Mulish;
+  font-weight: 400;
+  line-height: 36px;
+  word-wrap: break-word;
+  margin-bottom: -20px;
+  margin-top: 10px;
+  margin-left: 20px;
+  align-self: flex-start;
+  cursor: pointer;
+}
+
 .heading-container {
   display: flex;
   flex-direction: column;
@@ -35,4 +49,35 @@ h1 {
   align-self: flex-end;
   cursor: pointer;
   margin-top: -15px;
+}
+
+.project-container {
+  display: flex;
+  flex-direction: column;
+  width: 66%;
+}
+
+.project-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 1px #deb992 solid;
+}
+
+.project-item p {
+  color: white;
+}
+
+.project-details,
+.project-details-cont {
+  display: flex;
+  flex-direction: row;
+}
+
+.project-details > p {
+  margin-right: 60px;
+}
+
+.project-details-cont {
+  justify-content: space-between;
 }

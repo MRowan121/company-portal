@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import axios from 'axios';
 
 interface Team {
@@ -17,7 +18,7 @@ interface Team {
 export class TeamsComponent implements OnInit {
   teams: Team[] = [];
 
-  constructor() {}
+  constructor(private router: Router) {}
   ngOnInit() {
     this.getTeams();
   }
@@ -58,5 +59,15 @@ export class TeamsComponent implements OnInit {
         );
       })
     );
+  }
+
+  openProjects(team: Team) {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        projects: team.projects,
+        teamName: team.name,
+      },
+    };
+    this.router.navigate(['/teams/projects'], navigationExtras);
   }
 }

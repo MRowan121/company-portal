@@ -52,6 +52,7 @@ h1 {
   border-radius: 20px;
   margin-top: 40px;
   padding: 10px;
+  cursor: pointer;
 }
 
 .card-header {
