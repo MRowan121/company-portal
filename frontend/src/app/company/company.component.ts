@@ -21,7 +21,6 @@ export class CompanyComponent implements OnInit {
     if (savedUser) {
       this.user = JSON.parse(savedUser);
     }
-    console.log(this.user);
     this.getCompanies();
     this.isAdmin = localStorage.getItem('isAdmin') === 'true' ? true : false;
     this.isLoggedIn =
@@ -40,9 +39,9 @@ export class CompanyComponent implements OnInit {
     this.companyNames = request.data;
   }
 
-  getCompanyId() {
-    localStorage.getItem('user');
-  }
+  // getCompanyId() {
+  //   localStorage.getItem('user');
+  // }
 
   chooseCompany(value: string) {
     const selectedCompany = this.user.companies.filter(
