@@ -10,6 +10,7 @@ import { TeamsComponent } from './teams/teams.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
 import { CompanyComponent } from './company/company.component';
+import { AnnouncementCardComponent } from './Components/announcement-card/announcement-card.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CompanyComponent } from './company/company.component';
     TeamsComponent,
     ProjectsComponent,
     UserRegistryComponent,
-    CompanyComponent
+    CompanyComponent,
+    AnnouncementCardComponent
   ],
   imports: [
     BrowserModule,
