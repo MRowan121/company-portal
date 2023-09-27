@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'select-company', component: CompanyComponent },
   { path: 'announcements', component: AnnouncementsComponent },
   { path: 'teams', component: TeamsComponent },
-  { path: 'projects', component: ProjectsComponent },
+  { path: 'teams/projects', component: ProjectsComponent },
   { path: 'user-registry', component: UserRegistryComponent },
 ];
 

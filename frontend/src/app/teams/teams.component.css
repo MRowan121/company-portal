@@ -1,0 +1,108 @@
+.teams {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heading-container {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px #deb992 solid;
+  width: 66%;
+  padding: 15px;
+}
+
+h1 {
+  color: #1ba098;
+  font-size: 45px;
+  font-family: Mulish;
+  font-weight: 400;
+  line-height: 60px;
+  word-wrap: break-word;
+  align-self: center;
+  margin: 0;
+}
+
+.new-team-btn {
+  width: 15%;
+  height: 100%;
+  background: #1ba098;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10.29px;
+  color: white;
+  border: none;
+  font-size: x-large;
+  align-self: flex-end;
+  cursor: pointer;
+  margin-top: -15px;
+}
+
+.team-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 200px;
+  background: #0b2d45;
+  border-radius: 20px;
+  margin-top: 40px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px #deb992 solid;
+}
+
+.card-header > p {
+  color: white;
+  font-family: Mulish;
+  font-weight: 400;
+  word-wrap: break-word;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+h3 {
+  color: white;
+  font-family: Mulish;
+  font-weight: 400;
+  word-wrap: break-word;
+  text-align: center;
+  margin: 10px 0px;
+}
+
+.card-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 50%;
+}
+
+.card-body p {
+  flex: 0 0 calc(50% - 10px);
+  margin: 5px;
+  width: 15%;
+  height: fit-content;
+  background: #1ba098;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10.29px;
+  color: white;
+  border: none;
+  font-size: larger;
+  text-align: center;
+}
+
+.team-name {
+  font-size: xx-large;
+}
