@@ -1,2 +1,23 @@
-<p>login works!</p>
-<button routerLink="/announcements">Go To Announcements</button>
+<link rel="preconnect" href="https://fonts.googleapis.com%22%3E/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200&display=swap" rel="stylesheet">
+    <div class = titlecard>
+        <h1 class = main>COOK SYSTEMS</h1>
+        <h2 class = sub> A FINAL APP</h2>
+    </div>
+    <div class = loginbox>
+        <form>
+            <div class = inputs>
+                <!-- POST /users/login -->
+                <input #username (change)="getUsername(username.value)" class = inputfields type="text" id="username" name="username" placeholder="Username"><br><br>
+                
+                <input #password (change)="getPassword(password.value)" class = inputfields type="text" id="password" name="password" placeholder="Password"><br><br>
+                
+            </div>
+            <div>
+                <input class = loginbutton type="submit" value="Login" (click) ="validateUser($event)" >
+                <h1 *ngIf = 'error !== ""'style = 'color: red;'>{{ error }}</h1>
+            </div>
+        </form>
+    </div>
+<button class = temp routerLink="/announcements">Go To Announcements</button>
