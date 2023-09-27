@@ -4,28 +4,31 @@
     <h1>User Registry</h1>
     <h4>A general view of all your members in your organization</h4>
   </div>
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Admin</th>
-          <th>Active</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td *ngIf="user.admin" class="true">YES</td>
-          <td *ngIf="!user.admin" class="false">NO</td>
-          <td *ngIf="user.active" class="true">YES</td>
-          <td *ngIf="!user.active" class="false">NO</td>
-          <td>{{ user.status.toUpperCase() }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="users-content">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Admin</th>
+            <th>Active</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td *ngIf="user.admin" class="true">YES</td>
+            <td *ngIf="!user.admin" class="false">NO</td>
+            <td *ngIf="user.active" class="true">YES</td>
+            <td *ngIf="!user.active" class="false">NO</td>
+            <td>{{ user.status.toUpperCase() }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="new-user-btn">Add User</button>
   </div>
 </div>
