@@ -4,10 +4,9 @@
     Select Company
 </h1>
 
-<select class="selector" name="company" id="company">
+<select #selectList (change)='chooseCompany(selectList.value)' class="selector" name="company" id="company">
     <option value="none" selected disabled hidden>Pick An Option</option>
-    <option value="CookSystems">Cook Systems</option>
-    <option value="Google">Google</option>
+   <option *ngFor = "let company of companyNames" value = '{{ company }}'>{{ company }}</option>
     
 </select>
 </div>

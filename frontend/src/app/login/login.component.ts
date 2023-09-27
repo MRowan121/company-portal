@@ -65,6 +65,8 @@ if(localStorage.getItem('isAdmin') === null){
     try{
       const request = await axios.post("http://localhost:8080/users/login", userToSubmit) 
       this.user=request.data
+      localStorage.setItem('user', JSON.stringify(this.user))
+      console.log(request.data)
       this.isLoggedIn = true
 
       if(request.data.isAdmin){
