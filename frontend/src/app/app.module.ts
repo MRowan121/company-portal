@@ -10,6 +10,8 @@ import { TeamsComponent } from './teams/teams.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
 import { CompanyComponent } from './company/company.component';
+import { ModalComponent } from './modal/modal.component';
+
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { CompanyComponent } from './company/company.component';
     ProjectsComponent,
     UserRegistryComponent,
     CompanyComponent,
+    ModalComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
