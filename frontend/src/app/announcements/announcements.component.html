@@ -4,21 +4,16 @@
     <h1>Announcements</h1>
     <button class="new-announcement-btn">New</button>
   </div>
-  <div class="announcement-container" *ngFor = "let announcement of announcements" > 
-    <app-announcement-card 
-      [firstname] = "announcement.author.profile.firstname" 
-      [lastName] = "announcement.author.profile.lastName" 
-      [date] = "announcement.date" 
-      [message] = "announcement.message"></app-announcement-card>
-  </div>
-  <!-- <div class="announcement-container">
+  <div
+    class="announcement-container"
+    *ngFor="let announcement of announcements"
+  >
     <div class="announcement-header">
-      <p>Matt Rowan</p>
-      <p>August 29, 1993</p>
+      <p>{{ announcement.firstName }} {{ announcement.lastName }}</p>
+      <p>{{ announcement.date }}</p>
     </div>
     <div class="announcement-body">
-      Lorem ipsum our announcements go here! Our business has been going great
-      and we are going to announce the winners of employee of the month!
+      {{ announcement.message }}
     </div>
-  </div> -->
+  </div>
 </div>
