@@ -4,4 +4,14 @@
     <h1>Teams</h1>
     <button class="new-team-btn">New</button>
   </div>
+  <div class="team-container" *ngFor="let team of teams">
+    <div class="card-header">
+      <p class="team-name">{{ team.name }}</p>
+      <p># of Projects: {{ team.projects.length }}</p>
+    </div>
+    <h3>Members</h3>
+    <div class="card-body">
+      <p *ngFor="let name of team.memberNames">{{ name }}</p>
+    </div>
+  </div>
 </div>
