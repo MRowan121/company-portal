@@ -15,6 +15,7 @@ export class DataService {
   private user: any;
   private isAdmin: boolean = false;
   private isLoggedIn: boolean = false;
+  private inputCompany: number = 6;
 
   constructor() {}
 
@@ -26,7 +27,7 @@ export class DataService {
     this.user = user;
   }
 
-  getisAdmin(): boolean {
+  getIsAdmin(): boolean {
     return this.isAdmin;
   }
 
@@ -40,5 +41,12 @@ export class DataService {
 
   setIsLoggedIn(boolean: boolean) {
     this.isLoggedIn = boolean;
+  }
+
+  setCompany(inputCompany: number){
+    this.inputCompany = inputCompany;
+}
+  getCompany(): number{
+      return this.inputCompany;
   }
 }

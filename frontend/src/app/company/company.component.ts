@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
+
 const axios = require('axios');
 
 @Component({
@@ -12,24 +13,18 @@ export class CompanyComponent implements OnInit {
 
   constructor(private router: Router, private dataService: DataService) {}
   
-  isAdmin: boolean = this.dataService.getisAdmin();
+  isAdmin: string | null = localStorage.getItem('isAdmin')
   isLoggedIn: boolean = this.dataService.getIsLoggedIn();
-  companyNames: string[] = [];
+  companyNames: any[] = [];
   user: any = this.dataService.getUser();
   selectedCompanyId: number = 0;
 
   ngOnInit() {
-    // const savedUser = localStorage.getItem('user');
-    // if (savedUser) {
-    //   this.user = JSON.parse(savedUser);
-    // }
     console.log('user com[', this.user)
     console.log('administerrrr', this.isAdmin)
     this.getCompanies();
-    // this.isAdmin = this.isAdmin === true ? true : false;
-    // this.isLoggedIn = this.isLoggedIn === true ? true : false;
     if (this.isLoggedIn) {
-      if (!this.isAdmin) {
+      if (this.isAdmin === 'false') {
         this.router.navigate(['/announcements']);
       }
     } else {
@@ -38,15 +33,16 @@ export class CompanyComponent implements OnInit {
   }
 
   async getCompanies() {
-    const request = await axios.get('http://localhost:8080/company');
-    this.companyNames = request.data;
-    console.log('rezzz', request)
+    //circle with backend on updating getcompanies reponse- admin for whole site vs admin for single company
+    this.companyNames = this.user.companies.map((company: any) => company.name)
   }
 
   chooseCompany(value: string) {
     const selectedCompany = this.user.companies.filter(
       (company: any) => company.name === value
     );
+    console.log(selectedCompany[0].id)
+    this.dataService.setCompany(selectedCompany[0].id)
     this.selectedCompanyId = selectedCompany[0].id;
     localStorage.setItem(
       'selectedCompanyId',
@@ -54,4 +50,7 @@ export class CompanyComponent implements OnInit {
     );
     this.router.navigate(['/announcements']);
   }
+
+
+
 }
