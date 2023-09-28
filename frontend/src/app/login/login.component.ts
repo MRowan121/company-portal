@@ -90,9 +90,6 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/announcements']);
         }
 
-      //this.router.navigate(['/select-company']);
-
-
     } catch (err) {
       this.error = 'Login Error';
       console.log(err);

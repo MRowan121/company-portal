@@ -10,8 +10,9 @@ import { TeamsComponent } from './teams/teams.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
 import { CompanyComponent } from './company/company.component';
-import { ModalComponent } from './modal/modal.component';
+import { ModalComponent } from './Components/modal/modal.component';
 import { DataService } from './data.service';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { DataService } from './data.service';
     CompanyComponent,
     ModalComponent
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [DataService],
   bootstrap: [AppComponent],
 })

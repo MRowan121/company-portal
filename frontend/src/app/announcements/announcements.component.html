@@ -2,7 +2,7 @@
 <div class="announcements">
   <div class="heading-container">
     <h1>Announcements</h1>
-    <button class="new-announcement-btn">New</button>
+    <button class="new-announcement-btn" (click)="toggleModal()">New</button>
   </div>
   <div
     class="announcement-container"
@@ -16,5 +16,5 @@
       {{ announcement.message }}
     </div>
   </div>
-  <app-modal></app-modal>
+  <app-modal [inputOne]="inputOne" [inputTwo]="inputTwo" [hidden]="isModalHidden" (formSubmitted)="onAnnouncementSubmission($event)"></app-modal>
 </div>
