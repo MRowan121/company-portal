@@ -42,11 +42,13 @@ interface Announcement {
 export class AnnouncementsComponent implements OnInit {
   companyId: string = this.dataService.getCompany().toString();
   announcements: Announcement[] = [];
-  user: any = {};
-  // isAdmin: boolean = this.dataService.getIsAdmin();
-  isAdmin: string | null = localStorage.getItem("isAdmin");
-  constructor(private router: Router, private dataService: DataService) {
-  }
+  user: any = this.dataService.getUser();
+  isModalHidden: boolean = true;
+  inputOne: string = 'title';
+  inputTwo: string = 'message';
+  newAnnouncement: any;
+  isAdmin: boolean = this.dataService.getIsAdmin();
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.getAnnouncements();
@@ -54,16 +56,64 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   async getAnnouncements() {
+    // this.companyId = localStorage.getItem('selectedCompanyId');
+    this.companyId = this.user.companies[0].id;
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/announcements`
     );
+    console.log('reqqqq', request)
     this.announcements = request.data.map((obj: AnnouncementDTO) => {
+      const monthNames = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ];
+      let date = new Date(obj.date);
+      let day = date.getDate();
+      let month = monthNames[date.getMonth()];
+      let year = date.getFullYear();
+
       return {
         firstName: obj.author.profile.firstName,
         lastName: obj.author.profile.lastName,
         message: obj.message,
-        date: new Date(obj.date),
+        date: `${month} ${day}, ${year}`,
       };
     }).sort((a: any,b: any)=> b.date - a.date);
+  }
+
+  toggleModal() {
+    this.isModalHidden
+      ? (this.isModalHidden = false)
+      : (this.isModalHidden = true);
+
+    console.log(this.isModalHidden);
+  }
+
+  onAnnouncementSubmission(announcement: any) {
+    this.newAnnouncement = {
+      title: announcement.title,
+      message: announcement.message,
+      user: this.user
+    }
+
+    axios.post(
+      `http://localhost:8080/company/${this.user.companies[0].id}/announcements`, this.newAnnouncement
+    ).then((response: any) => {
+      console.log(response)
+      //this.announcements.push(response.data)
+      this.getAnnouncements()
+    })
+
+    this.isModalHidden = true;
   }
 }
