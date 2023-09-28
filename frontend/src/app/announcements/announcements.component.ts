@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
-import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { AnnouncementDTO } from '../interfaces';
 
@@ -20,14 +19,12 @@ export class AnnouncementsComponent implements OnInit {
   companyId: string = this.dataService.getCompany().toString();
   announcements: Announcement[] = [];
   user: any = {};
-  // isAdmin: boolean = this.dataService.getIsAdmin();
   isAdmin: string | null = localStorage.getItem('isAdmin');
   showForm: boolean = false;
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.getAnnouncements();
-    // localStorage.getItem("isAdmin")
   }
 
   async getAnnouncements() {

@@ -7,8 +7,9 @@
       <input
         #title
         type="text"
-        id="username"
+        id="title"
         name="title"
+        (change)="getTitle(title.value)"
         placeholder="Title"
       />
       <input
@@ -16,11 +17,12 @@
         type="text"
         id="message"
         name="message"
+        (change)="getMessage(message.value)"
         placeholder="Message"
       />
     </div>
     <div>
-      <button class="submit-btn">Submit</button>
+      <button class="submit-btn" (click)="onSubmit()">Submit</button>
     </div>
   </div>
 </div>
