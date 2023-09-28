@@ -13,9 +13,9 @@ import { DataService } from '../data.service';
 export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
-  user: any = {};
-  isAdmin: Boolean = false;
-  isLoggedIn: Boolean = false;
+  user: any;
+  isAdmin: boolean = false;
+  isLoggedIn: boolean = false;
   error: string = '';
   
   constructor(private router: Router, private dataService: DataService) {}
@@ -70,19 +70,22 @@ export class LoginComponent implements OnInit {
 
       //Setting the user from backend**************
       this.user = request.data;
+      this.isAdmin = request.data.admin;
       this.dataService.setUser(this.user);
-      console.log(this.user.admin);
-      console.log(this.user);
+      this.dataService.setIsAdmin(this.isAdmin)
+      // console.log(this.user.admin);
+      console.log('adddmin', this.isAdmin);
 
 
       //Routing after logging
       this.isLoggedIn = true;
-      
-        if (this.user.admin) {
+      this.dataService.setIsLoggedIn(this.isLoggedIn);
+
+        if (this.isAdmin) {
           console.log("Route for select-company");
           this.router.navigate(['/select-company']);
         }
-        if (!this.user.admin) {
+        if (!this.isAdmin) {
           console.log("Route for announcments");
           this.router.navigate(['/announcements']);
         }

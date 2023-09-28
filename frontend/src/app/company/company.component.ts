@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from '../data.service';
 const axios = require('axios');
 
 @Component({
@@ -8,39 +9,38 @@ const axios = require('axios');
   styleUrls: ['./company.component.css'],
 })
 export class CompanyComponent implements OnInit {
-  isAdmin: boolean = false;
-  isLoggedIn: boolean = false;
+
+  constructor(private router: Router, private dataService: DataService) {}
+  
+  isAdmin: boolean = this.dataService.getisAdmin();
+  isLoggedIn: boolean = this.dataService.getIsLoggedIn();
   companyNames: string[] = [];
-  user: any = {};
+  user: any = this.dataService.getUser();
   selectedCompanyId: number = 0;
 
-  constructor(private router: Router) {}
-
   ngOnInit() {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      this.user = JSON.parse(savedUser);
-    }
+    // const savedUser = localStorage.getItem('user');
+    // if (savedUser) {
+    //   this.user = JSON.parse(savedUser);
+    // }
+    console.log('user com[', this.user)
+    console.log('administerrrr', this.isAdmin)
     this.getCompanies();
-    this.isAdmin = localStorage.getItem('isAdmin') === 'true' ? true : false;
-    this.isLoggedIn =
-      localStorage.getItem('isLoggedIn') === 'true' ? true : false;
+    // this.isAdmin = this.isAdmin === true ? true : false;
+    // this.isLoggedIn = this.isLoggedIn === true ? true : false;
     if (this.isLoggedIn) {
       if (!this.isAdmin) {
         this.router.navigate(['/announcements']);
       }
     } else {
-      console.log("Navigating to select company here **************");
-      //Use service not local storage.
-      //this.router.navigate(['/']);
       this.router.navigate(['/select-company']);
-
     }
   }
 
   async getCompanies() {
     const request = await axios.get('http://localhost:8080/company');
     this.companyNames = request.data;
+    console.log('rezzz', request)
   }
 
   chooseCompany(value: string) {

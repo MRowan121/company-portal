@@ -11,6 +11,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
 import { CompanyComponent } from './company/company.component';
 import { ModalComponent } from './modal/modal.component';
+import { DataService } from './data.service';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { ModalComponent } from './modal/modal.component';
     ModalComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
