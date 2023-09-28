@@ -2,30 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
-
-
-interface ProfileDTO {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-}
-
-interface BasicUserDTO {
-  id: number;
-  profile: ProfileDTO;
-  isAdmin: boolean;
-  active: boolean;
-  status: string;
-}
-
-interface AnnouncementDTO {
-  id: number;
-  date: string;
-  title: string;
-  message: string;
-  author: BasicUserDTO;
-}
+import { AnnouncementDTO } from '../interfaces';
 
 interface Announcement {
   firstName: string;
@@ -44,9 +21,8 @@ export class AnnouncementsComponent implements OnInit {
   announcements: Announcement[] = [];
   user: any = {};
   // isAdmin: boolean = this.dataService.getIsAdmin();
-  isAdmin: string | null = localStorage.getItem("isAdmin");
-  constructor(private router: Router, private dataService: DataService) {
-  }
+  isAdmin: string | null = localStorage.getItem('isAdmin');
+  constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
     this.getAnnouncements();
@@ -57,13 +33,15 @@ export class AnnouncementsComponent implements OnInit {
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/announcements`
     );
-    this.announcements = request.data.map((obj: AnnouncementDTO) => {
-      return {
-        firstName: obj.author.profile.firstName,
-        lastName: obj.author.profile.lastName,
-        message: obj.message,
-        date: new Date(obj.date),
-      };
-    }).sort((a: any,b: any)=> b.date - a.date);
+    this.announcements = request.data
+      .map((obj: AnnouncementDTO) => {
+        return {
+          firstName: obj.author.profile.firstName,
+          lastName: obj.author.profile.lastName,
+          message: obj.message,
+          date: new Date(obj.date),
+        };
+      })
+      .sort((a: any, b: any) => b.date - a.date);
   }
 }
