@@ -3,18 +3,24 @@
   <p class="back-Btn" routerLink="/teams">&larr; Back</p>
   <div class="heading-container">
     <h1>Projects for {{ teamName }}</h1>
-    <button class="new-project-btn">New</button>
+    <button class="new-project-btn" (click)="showOverlay()">New</button>
   </div>
   <div class="project-container">
     <div class="project-item" *ngFor="let project of projects">
       <div class="project-details">
-        <p>{{ project.name }}</p>
-        <p>{{ project.active }}</p>
+        <p class="project-name">{{ project.name }}</p>
+        <p *ngIf="project.active" class="true">Active</p>
+        <p *ngIf="!project.active" class="false">Inactive</p>
       </div>
       <div class="project-details-cont">
         <p>{{ project.description }}</p>
-        <button class="new-project-btn">Edit</button>
+        <button class="edit-project-btn">Edit</button>
       </div>
     </div>
   </div>
+  <app-project-overlay
+    *ngIf="showForm"
+    [teamId]="teamId"
+    (hideOverlay)="showOverlay()"
+  ></app-project-overlay>
 </div>

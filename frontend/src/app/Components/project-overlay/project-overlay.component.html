@@ -1,0 +1,28 @@
+<div class="project-overlay">
+  <div class="project-container">
+    <div class="exit-button" (click)="closeOverlay()">
+      <img class="exit-icon" src="assets/exit.svg" alt="exit" />
+    </div>
+    <div class="input-container">
+      <input
+        #name
+        type="text"
+        id="name"
+        name="name"
+        (change)="getName(name.value)"
+        placeholder="Project Name"
+      />
+      <input
+        #description
+        type="text"
+        id="description"
+        name="description"
+        (change)="getDescription(description.value)"
+        placeholder="Project Description"
+      />
+    </div>
+    <div>
+      <button class="submit-btn" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</div>

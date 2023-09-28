@@ -13,6 +13,7 @@ import { CompanyComponent } from './company/company.component';
 import { ModalComponent } from './modal/modal.component';
 import { DataService } from './data.service';
 import { AnnouncementOverlayComponent } from './Components/announcement-overlay/announcement-overlay.component';
+import { ProjectOverlayComponent } from './Components/project-overlay/project-overlay.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AnnouncementOverlayComponent } from './Components/announcement-overlay/
     UserRegistryComponent,
     CompanyComponent,
     ModalComponent,
-    AnnouncementOverlayComponent
+    AnnouncementOverlayComponent,
+    ProjectOverlayComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [DataService],

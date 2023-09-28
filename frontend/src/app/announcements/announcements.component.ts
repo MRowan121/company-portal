@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import { DataService } from '../data.service';
 import { AnnouncementDTO } from '../interfaces';
+import { from } from 'rxjs';
 
 interface Announcement {
   firstName: string;
@@ -28,19 +29,24 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   async getAnnouncements() {
-    const request = await axios.get(
-      `http://localhost:8080/company/${this.companyId}/announcements`
-    );
-    this.announcements = request.data
-      .map((obj: AnnouncementDTO) => {
-        return {
-          firstName: obj.author.profile.firstName,
-          lastName: obj.author.profile.lastName,
-          message: obj.message,
-          date: new Date(obj.date),
-        };
-      })
-      .sort((a: any, b: any) => b.date - a.date);
+    const apiUrl: string = `http://localhost:8080/company/${this.companyId}/announcements`;
+    const observable = from(axios.get<any>(apiUrl));
+
+    observable.subscribe({
+      next: (response) => {
+        const data = response.data;
+        this.announcements = data
+          .map((obj: AnnouncementDTO) => {
+            return {
+              firstName: obj.author.profile.firstName,
+              lastName: obj.author.profile.lastName,
+              message: obj.message,
+              date: new Date(obj.date),
+            };
+          })
+          .sort((a: any, b: any) => b.date - a.date);
+      },
+    });
   }
 
   showOverlay() {

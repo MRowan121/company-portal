@@ -24,15 +24,17 @@ h1 {
 }
 
 .new-team-btn {
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  height: 200px;
-  background: #0b2d45;
-  border-radius: 20px;
-  margin-top: 40px;
-  padding: 10px;
+  width: 15%;
+  height: 100%;
+  background: #1ba098;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10.29px;
+  color: white;
+  border: none;
+  font-size: x-large;
+  align-self: flex-end;
   cursor: pointer;
+  margin-top: -15px;
 }
 
 .team-container {
@@ -107,24 +109,24 @@ h3 {
 
 /* The Modal (background) */
 .modal {
-  position: fixed;  
+  position: fixed;
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
 .modal-content {
-  display:flex;
+  display: flex;
   width: 768px;
   height: 687px;
   border-radius: 20px;
-  background: #0B2D45;
+  background: #0b2d45;
 }
 
 /* The Close Button */
@@ -142,17 +144,16 @@ h3 {
   cursor: pointer;
 }
 
-.close-button{
-  display:none
+.close-button {
+  display: none;
 }
 
-.inputfields{
-  color: #DEB992;
-text-align: center;
-font-family: Mulish;
-font-size: 16.244px;
-font-style: normal;
-font-weight: 400;
-line-height: 150%;
- 
+.inputfields {
+  color: #deb992;
+  text-align: center;
+  font-family: Mulish;
+  font-size: 16.244px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
 }

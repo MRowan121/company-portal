@@ -2,11 +2,9 @@
 <div class="teams">
   <div class="heading-container">
     <h1>Teams</h1>
-    <!-- <button class="new-team-btn">New</button> -->
+    <button class="new-team-btn">New</button>
   </div>
-  <div class="team-container">  
-
-    
+  <div class="team-container">
     <div
       class="team-card"
       *ngFor="let team of teams"
@@ -15,31 +13,11 @@
       <div class="card-header">
         <p class="team-name">{{ team.name }}</p>
         <p># of Projects: {{ team.projects.length }}</p>
-
       </div>
       <h3>Members</h3>
       <div class="card-body">
         <p *ngFor="let name of team.memberNames">{{ name }}</p>
       </div>
     </div>
-    
   </div>
 </div>
-
-<button *ngIf = "isAdmin === 'true'" (click) = "onClick()" id="myBtn">Open Modal</button>
-    <div [hidden] = "isHidden" id="myModal" class="modal" >
-
-      <!-- Modal content -->
-      <div class="modal-content">
-        <input  class = inputfields type="text" id="username" name="username" placeholder="Username"><br><br>
-                
-        <input  class = inputfields type="text" id="password" name="password" placeholder="Password"><br><br>
-        <h2>Select Members</h2>
-        <select></select>
-        <button (click) = "onClick()" class = "close-button">Submit</button>
-      </div>
-    
-    </div>
-
-    
-    

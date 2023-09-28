@@ -12,8 +12,6 @@ interface Team {
   memberNames: string[];
 }
 
-
-
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
@@ -22,15 +20,14 @@ interface Team {
 export class TeamsComponent implements OnInit {
   teams: Team[] = [];
   isHidden: boolean = true;
-  users: string[] = []
+  users: string[] = [];
   companyId: string = this.dataService.getCompany().toString();
-  isAdmin: string | null = localStorage.getItem("isAdmin")
+  isAdmin: string | null = localStorage.getItem('isAdmin');
 
   constructor(private router: Router, private dataService: DataService) {}
   ngOnInit() {
     this.getTeams();
     this.getCompanyUsers();
-    
   }
 
   async getTeams() {
@@ -39,16 +36,18 @@ export class TeamsComponent implements OnInit {
       //HARDCODED COMPANY ID VALUE - REPLACE 6 WITH $companyId
       `http://localhost:8080/company/${this.companyId}/teams`
     );
-    console.log(request.data)
-    this.teams = request.data.map((obj: any) => {
-      return {
-        teamId: obj.id,
-        name: obj.name,
-        projects: [],
-        memberProfiles: obj.teammates,
-        memberNames: [],
-      };
-    }).sort((a: any,b: any)=> a.teamId - b.teamId);
+    console.log(request.data);
+    this.teams = request.data
+      .map((obj: any) => {
+        return {
+          teamId: obj.id,
+          name: obj.name,
+          projects: [],
+          memberProfiles: obj.teammates,
+          memberNames: [],
+        };
+      })
+      .sort((a: any, b: any) => a.teamId - b.teamId);
     this.getMemberNames();
     this.getProjects(this.companyId);
     // console.log(this.teams);
@@ -56,11 +55,11 @@ export class TeamsComponent implements OnInit {
 
   async getProjects(companyId: any) {
     this.teams.forEach(async (team: Team) => {
-      console.log(team.teamId)
+      console.log(team.teamId);
       const request = await axios.get(
         `http://localhost:8080/company/${companyId}/teams/${team.teamId}/projects`
       );
-      console.log(request.data)
+      console.log(request.data);
       team.projects = request.data;
     });
   }
@@ -80,6 +79,7 @@ export class TeamsComponent implements OnInit {
       state: {
         projects: team.projects,
         teamName: team.name,
+        teamId: team.teamId,
       },
     };
     this.router.navigate(['/teams/projects'], navigationExtras);
@@ -88,29 +88,22 @@ export class TeamsComponent implements OnInit {
     const companyId = this.dataService.getCompany();
     const request = await axios.get(
       `http://localhost:8080/company/${companyId}/users`
-      // ${companyId}
     );
     this.users = request.data.map((obj: any) => {
       return {
         name: `${obj.profile.firstname} ${obj.profile.lastName}[0].`,
       };
     });
-    console.log(this.users)
+    console.log(this.users);
   }
 
-  onClick(){
-    if(this.isHidden= false){
-      this.isHidden = true
-      console.log(this.isHidden)
+  onClick() {
+    if ((this.isHidden = false)) {
+      this.isHidden = true;
+      console.log(this.isHidden);
     }
-    if(this.isHidden= true){
+    if ((this.isHidden = true)) {
       this.isHidden = false;
     }
   }
 }
-
-
-
-
-  
-  
