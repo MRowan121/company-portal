@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 
+
 interface ProfileDTO {
   firstname: string;
   lastname: string;
@@ -39,6 +40,7 @@ interface Announcement {
 export class AnnouncementsComponent implements OnInit {
   companyId: string | null = '';
   announcements: Announcement[] = [];
+  user: any = {};
 
   constructor() {}
 
@@ -47,7 +49,8 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   async getAnnouncements() {
-    this.companyId = localStorage.getItem('selectedCompanyId');
+    // this.companyId = localStorage.getItem('selectedCompanyId');
+  
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/announcements`
     );

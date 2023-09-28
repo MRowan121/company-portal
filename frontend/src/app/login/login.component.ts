@@ -2,6 +2,8 @@ import { outputAst } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
+import { DataService } from '../data.service'; 
+
 
 @Component({
   selector: 'app-login',
@@ -11,26 +13,29 @@ import axios from 'axios';
 export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
-  user: any = {};
-  isAdmin: Boolean = false;
-  isLoggedIn: Boolean = false;
+  user: any;
+  isAdmin: boolean = false;
+  isLoggedIn: boolean = false;
   error: string = '';
-  constructor(private router: Router) {}
+  
+  constructor(private router: Router, private dataService: DataService) {}
   ngOnInit() {
-    this.isLoggedIn =
-      localStorage.getItem('isLoggedIn') === 'true' ? true : false;
-    this.isAdmin = localStorage.getItem('isAdmin') === 'true' ? true : false;
-    if (localStorage.getItem('isAdmin') === null) {
-      localStorage.setItem('isAdmin', 'false');
-    }
-    if (this.isLoggedIn) {
-      if (this.isAdmin) {
-        this.router.navigate(['/select-company']);
-      }
-      if (!this.isAdmin) {
-        this.router.navigate(['/announcements']);
-      }
-    }
+    // this.isLoggedIn =
+    //   localStorage.getItem('isLoggedIn') === 'true' ? true : false;
+    // this.isAdmin = localStorage.getItem('isAdmin') === 'true' ? true : false;
+    // if (localStorage.getItem('isAdmin') === null) {
+    //   localStorage.setItem('isAdmin', 'false');
+    // }
+
+
+    // if (this.isLoggedIn) {
+    //   if (this.user.admin) {
+    //     this.router.navigate(['/select-company']);
+    //   }
+    //   if (!this.user.admin) {
+    //     this.router.navigate(['/announcements']);
+    //   }
+    // }
   }
 
   getUsername(value: string) {
@@ -62,16 +67,32 @@ export class LoginComponent implements OnInit {
         'http://localhost:8080/users/login',
         userToSubmit
       );
-      this.user = request.data;
-      localStorage.setItem('user', JSON.stringify(this.user));
-      this.isLoggedIn = true;
 
-      if (request.data.isAdmin) {
-        this.isAdmin = true;
-        localStorage.setItem('isAdmin', 'true');
-      }
-      localStorage.setItem('isLoggedIn', 'true');
-      this.router.navigate(['/select-company']);
+      //Setting the user from backend**************
+      this.user = request.data;
+      this.isAdmin = request.data.admin;
+      this.dataService.setUser(this.user);
+      this.dataService.setIsAdmin(this.isAdmin)
+      // console.log(this.user.admin);
+      console.log('adddmin', this.isAdmin);
+
+
+      //Routing after logging
+      this.isLoggedIn = true;
+      this.dataService.setIsLoggedIn(this.isLoggedIn);
+
+        if (this.isAdmin) {
+          console.log("Route for select-company");
+          this.router.navigate(['/select-company']);
+        }
+        if (!this.isAdmin) {
+          console.log("Route for announcments");
+          this.router.navigate(['/announcements']);
+        }
+
+      //this.router.navigate(['/select-company']);
+
+
     } catch (err) {
       this.error = 'Login Error';
       console.log(err);
