@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<button (click) = "onClick()" id="myBtn">Open Modal</button>
+<button *ngIf = "isAdmin === 'true'" (click) = "onClick()" id="myBtn">Open Modal</button>
     <div [hidden] = "isHidden" id="myModal" class="modal" >
 
       <!-- Modal content -->

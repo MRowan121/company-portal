@@ -29,12 +29,13 @@ export class UserRegistryComponent implements OnInit {
     );
     this.users = request.data.map((obj: any) => {
       return {
-        name: `${obj.profile.firstname} ${obj.profile.lastName}`,
+        name: `${obj.profile.firstName} ${obj.profile.lastName}`,
         email: obj.profile.email,
         active: obj.active,
-        admin: obj.isAdmin,
+        admin: obj.admin,
         status: obj.status,
       };
     });
+    console.log(request.data)
   }
 }

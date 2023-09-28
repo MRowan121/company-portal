@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
+import { Router } from '@angular/router';
+import { DataService } from '../data.service';
 
 
 interface ProfileDTO {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
 }
@@ -38,29 +40,30 @@ interface Announcement {
   styleUrls: ['./announcements.component.css'],
 })
 export class AnnouncementsComponent implements OnInit {
-  companyId: string | null = '';
+  companyId: string = this.dataService.getCompany().toString();
   announcements: Announcement[] = [];
   user: any = {};
-
-  constructor() {}
+  // isAdmin: boolean = this.dataService.getIsAdmin();
+  isAdmin: string | null = localStorage.getItem("isAdmin");
+  constructor(private router: Router, private dataService: DataService) {
+  }
 
   ngOnInit() {
     this.getAnnouncements();
+    // localStorage.getItem("isAdmin")
   }
 
   async getAnnouncements() {
-    // this.companyId = localStorage.getItem('selectedCompanyId');
-  
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/announcements`
     );
     this.announcements = request.data.map((obj: AnnouncementDTO) => {
       return {
-        firstName: obj.author.profile.firstname,
-        lastName: obj.author.profile.lastname,
+        firstName: obj.author.profile.firstName,
+        lastName: obj.author.profile.lastName,
         message: obj.message,
-        date: obj.date,
+        date: new Date(obj.date),
       };
-    });
+    }).sort((a: any,b: any)=> b.date - a.date);
   }
 }

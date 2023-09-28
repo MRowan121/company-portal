@@ -72,7 +72,10 @@ export class LoginComponent implements OnInit {
       this.user = request.data;
       this.isAdmin = request.data.admin;
       this.dataService.setUser(this.user);
+      this.dataService.setCompany(this.user.companies[0].id)
       this.dataService.setIsAdmin(this.isAdmin)
+      localStorage.setItem('isAdmin', this.isAdmin.toString());
+      
       // console.log(this.user.admin);
       console.log('adddmin', this.isAdmin);
 
