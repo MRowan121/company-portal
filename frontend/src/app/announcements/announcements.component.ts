@@ -112,5 +112,7 @@ export class AnnouncementsComponent implements OnInit {
       //this.announcements.push(response.data)
       this.getAnnouncements()
     })
+
+    this.isModalHidden = true;
   }
 }
