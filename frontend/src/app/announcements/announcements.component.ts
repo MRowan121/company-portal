@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
+import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 
+
 interface ProfileDTO {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
 }
@@ -38,7 +40,7 @@ interface Announcement {
   styleUrls: ['./announcements.component.css'],
 })
 export class AnnouncementsComponent implements OnInit {
-  companyId: string | null = '';
+  companyId: string = this.dataService.getCompany().toString();
   announcements: Announcement[] = [];
   user: any = this.dataService.getUser();
   isModalHidden: boolean = true;
@@ -50,6 +52,7 @@ export class AnnouncementsComponent implements OnInit {
 
   ngOnInit() {
     this.getAnnouncements();
+    // localStorage.getItem("isAdmin")
   }
 
   async getAnnouncements() {
@@ -80,12 +83,12 @@ export class AnnouncementsComponent implements OnInit {
       let year = date.getFullYear();
 
       return {
-        firstName: obj.author.profile.firstname,
-        lastName: obj.author.profile.lastname,
+        firstName: obj.author.profile.firstName,
+        lastName: obj.author.profile.lastName,
         message: obj.message,
         date: `${month} ${day}, ${year}`,
       };
-    });
+    }).sort((a: any,b: any)=> b.date - a.date);
   }
 
   toggleModal() {
