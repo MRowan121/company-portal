@@ -1,0 +1,26 @@
+<div class="announcement-overlay">
+  <div class="announcement-container">
+    <div class="exit-button" (click)="closeOverlay()">
+      <img class="exit-icon" src="assets/exit.svg" alt="exit" />
+    </div>
+    <div class="input-container">
+      <input
+        #title
+        type="text"
+        id="username"
+        name="title"
+        placeholder="Title"
+      />
+      <input
+        #message
+        type="text"
+        id="message"
+        name="message"
+        placeholder="Message"
+      />
+    </div>
+    <div>
+      <button class="submit-btn">Submit</button>
+    </div>
+  </div>
+</div>

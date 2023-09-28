@@ -12,6 +12,7 @@ import { UserRegistryComponent } from './user-registry/user-registry.component';
 import { CompanyComponent } from './company/company.component';
 import { ModalComponent } from './modal/modal.component';
 import { DataService } from './data.service';
+import { AnnouncementOverlayComponent } from './Components/announcement-overlay/announcement-overlay.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { DataService } from './data.service';
     ProjectsComponent,
     UserRegistryComponent,
     CompanyComponent,
-    ModalComponent
+    ModalComponent,
+    AnnouncementOverlayComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [DataService],

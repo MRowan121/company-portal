@@ -22,6 +22,7 @@ export class AnnouncementsComponent implements OnInit {
   user: any = {};
   // isAdmin: boolean = this.dataService.getIsAdmin();
   isAdmin: string | null = localStorage.getItem('isAdmin');
+  showForm: boolean = false;
   constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
@@ -43,5 +44,13 @@ export class AnnouncementsComponent implements OnInit {
         };
       })
       .sort((a: any, b: any) => b.date - a.date);
+  }
+
+  showOverlay() {
+    this.showForm = !this.showForm;
+  }
+
+  closeOverlay() {
+    this.showForm = false;
   }
 }
