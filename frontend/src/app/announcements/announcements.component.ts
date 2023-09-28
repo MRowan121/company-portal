@@ -47,7 +47,7 @@ export class AnnouncementsComponent implements OnInit {
   inputOne: string = 'title';
   inputTwo: string = 'message';
   newAnnouncement: any;
-
+  isAdmin: boolean = this.dataService.getIsAdmin();
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
@@ -100,8 +100,6 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   onAnnouncementSubmission(announcement: any) {
-    console.log(this.user);
-    console.log(announcement)
     this.newAnnouncement = {
       title: announcement.title,
       message: announcement.message,

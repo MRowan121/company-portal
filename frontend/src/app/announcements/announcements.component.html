@@ -2,7 +2,7 @@
 <div class="announcements">
   <div class="heading-container">
     <h1>Announcements</h1>
-    <button *ngIf = "isAdmin === 'true'" class="new-announcement-btn" class="new-announcement-btn" (click)="toggleModal()">New</button>
+    <button *ngIf = "isAdmin === true" class="new-announcement-btn" class="new-announcement-btn" (click)="toggleModal()">New</button>
   </div>
   <div
     class="announcement-container"
