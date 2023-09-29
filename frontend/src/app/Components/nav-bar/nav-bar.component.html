@@ -5,14 +5,14 @@
       src="assets/home-icon.svg"
       routerLink="/announcements"
     />
-    <span *ngIf = "isAdmin === 'true'" class="active-user">ACTING AS ADMIN</span>
-    <span *ngIf = "isAdmin === 'false'" class="active-user">{{userName}}</span>
+    <span *ngIf="isAdmin === 'true'" class="active-user">ACTING AS ADMIN</span>
+    <span *ngIf="isAdmin === 'false'" class="active-user">{{ userName }}</span>
   </div>
-  <ul class="nav-links">  
+  <ul class="nav-links">
     <li routerLink="/announcements">Home</li>
-    <li *ngIf = "isAdmin === 'true'" routerLink="/select-company">Company</li>
+    <li *ngIf="isAdmin === 'true'" routerLink="/select-company">Company</li>
     <li routerLink="/teams">Teams</li>
-    <li *ngIf = "isAdmin === 'true'"  routerLink="/user-registry">Users</li>
-    <li (click) = 'logOut()' routerLink="/">Logout</li>
+    <li *ngIf="isAdmin === 'true'" routerLink="/user-registry">Users</li>
+    <li (click)="logOut()" routerLink="/">Logout</li>
   </ul>
 </nav>

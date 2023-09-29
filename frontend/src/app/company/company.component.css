@@ -1,29 +1,26 @@
-.company-container{
-    height:100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
+.company-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.company-container>h1{
-    color: #1BA098;
-font-size: 48px;
-font-family: Inter;
-font-weight: 800;
-line-height: 64px;
-word-wrap: break-word
+.company-container > h1 {
+  color: #1ba098;
+  font-size: 48px;
+  font-family: Inter;
+  font-weight: 800;
+  line-height: 64px;
+  word-wrap: break-word;
 }
 
-.selector{
-    
-    color: #005594;
-    font-size: 27.11px;
-    font-family: Fira Sans;
-    font-weight: 500;
-    line-height: 33.89px;
-    word-wrap: break-word;
-    
+.selector {
+  color: #005594;
+  font-size: 27.11px;
+  font-family: Fira Sans;
+  font-weight: 500;
+  line-height: 33.89px;
+  word-wrap: break-word;
 }

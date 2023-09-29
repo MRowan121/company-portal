@@ -22,7 +22,7 @@ export class UserRegistryComponent implements OnInit {
   error: string = '';
   companyId: string = this.dataService.getCompany().toString();
 
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(private dataService: DataService) {}
   ngOnInit() {
     this.getCompanyUsers();
   }
