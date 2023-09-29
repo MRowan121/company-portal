@@ -29,6 +29,11 @@
         </tbody>
       </table>
     </div>
-    <button class="new-user-btn">Add User</button>
+    <button class="new-user-btn" (click)="showOverlay()">Add User</button>
   </div>
+  <app-new-user-modal
+    *ngIf="showForm"
+    (hideOverlay)="showOverlay()"
+    (formSubmitted)="onSubmission($event)"
+  ></app-new-user-modal>
 </div>

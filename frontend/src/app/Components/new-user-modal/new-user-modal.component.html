@@ -1,0 +1,104 @@
+<div class="announcement-overlay">
+  <div class="announcement-container">
+    <div class="exit-button" (click)="closeOverlay()">
+      <img class="exit-icon" src="assets/exit.svg" alt="exit" />
+    </div>
+    <form class="test">
+      <div class="test-2">
+        <div class="test-3">
+          <input
+            type="text"
+            placeholder="First Name"
+            id="firstName"
+            name="firstName"
+            className="detailsForm"
+            required
+            autoComplete="off"
+            [(ngModel)]="formData.firstName"
+          />
+        </div>
+      </div>
+      <div class="test-2">
+        <div class="test-3">
+          <input
+            type="text"
+            placeholder="Last Name"
+            id="lastName"
+            name="lastName"
+            className="detailsForm"
+            required
+            autoComplete="off"
+            [(ngModel)]="formData.lastName"
+          />
+        </div>
+      </div>
+      <div class="test-2 full-width">
+        <div class="test-3">
+          <input
+            type="text"
+            placeholder="Phone"
+            id="phone"
+            name="phone"
+            className="detailsForm"
+            required
+            autoComplete="off"
+            [(ngModel)]="formData.phone"
+          />
+        </div>
+      </div>
+      <div class="test-2 full-width">
+        <div class="test-3">
+          <input
+            type="text"
+            placeholder="Email"
+            id="email"
+            name="email"
+            className="detailsForm"
+            required
+            autoComplete="off"
+            [(ngModel)]="formData.email"
+          />
+        </div>
+      </div>
+      <div class="test-2">
+        <div class="test-3">
+          <input
+            type="text"
+            placeholder="Username"
+            id="username"
+            name="username"
+            className="detailsForm"
+            required
+            autoComplete="off"
+            [(ngModel)]="formData.username"
+          />
+        </div>
+      </div>
+      <div class="test-2">
+        <div class="test-3">
+          <input
+            type="password"
+            placeholder="Password"
+            id="password"
+            name="password"
+            className="detailsForm"
+            required
+            autoComplete="off"
+            [(ngModel)]="formData.password"
+          />
+        </div>
+      </div>
+    </form>
+    <div class="admin-select">
+      <p>Make user an admin role?</p>
+      <select class="minimal" [(ngModel)]="formData.admin">
+        <option value="none" selected disabled hidden>Pick an option</option>
+        <option [ngValue]="true">Yes</option>
+        <option [ngValue]="false">No</option>
+      </select>
+    </div>
+    <div>
+      <button class="submit-btn" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</div>

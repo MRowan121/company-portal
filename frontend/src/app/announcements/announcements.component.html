@@ -22,8 +22,11 @@
       {{ announcement.message }}
     </div>
   </div>
-  <app-announcement-overlay
+  <app-create-modal
+    [inputOne]="inputOne"
+    [inputTwo]="inputTwo"
     *ngIf="showForm"
     (hideOverlay)="showOverlay()"
-  ></app-announcement-overlay>
+    (formSubmitted)="onAnnouncementSubmission($event)"
+  ></app-create-modal>
 </div>

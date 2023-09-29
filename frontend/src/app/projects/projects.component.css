@@ -89,6 +89,10 @@ h1 {
   justify-content: space-between;
 }
 
+.project-details-cont > p {
+  width: 75%;
+}
+
 .true {
   color: green;
 }

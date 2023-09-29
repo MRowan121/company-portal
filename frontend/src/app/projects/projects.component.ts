@@ -12,11 +12,14 @@ export class ProjectsComponent implements OnInit {
   projects: any[] = [];
   teamName: string = '';
   teamId: number = 0;
+  companyId: string = this.dataService.getCompany().toString();
   showForm: boolean = false;
+  inputOne: string = 'Project Name';
+  inputTwo: string = 'Description';
+  error: string = '';
+
   constructor(private router: Router, private dataService: DataService) {
     const input = this.router.getCurrentNavigation();
-    const receivedProjects = input?.extras?.state?.['projects'];
-    if (receivedProjects) this.projects = receivedProjects;
     const receivedTeamName = input?.extras?.state?.['teamName'];
     if (receivedTeamName) this.teamName = receivedTeamName;
     const receivedTeamId = input?.extras?.state?.['teamId'];
@@ -24,9 +27,33 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.projects);
-    console.log(this.teamName);
-    console.log(this.teamId);
+    this.getProjects();
+  }
+
+  async getProjects() {
+    const request = await axios.get(
+      `http://localhost:8080/company/${this.companyId}/teams/${this.teamId}/projects`
+    );
+    this.projects = request.data;
+  }
+
+  async onSubmission(formData: any) {
+    console.log(formData);
+    const newProject = {
+      name: formData['Project Name'],
+      description: formData['Description'],
+    };
+    try {
+      await axios.post(
+        `http://localhost:8080/company/${this.companyId}/teams/${this.teamId}/projects`,
+        newProject
+      );
+    } catch (err) {
+      this.error = 'Login Error';
+      console.log(err);
+    }
+    this.closeOverlay();
+    this.getProjects();
   }
 
   showOverlay() {

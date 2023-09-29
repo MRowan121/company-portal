@@ -22,6 +22,9 @@ export class AnnouncementsComponent implements OnInit {
   user: any = {};
   isAdmin: string | null = localStorage.getItem('isAdmin');
   showForm: boolean = false;
+  error: string = '';
+  inputOne: string = 'Title';
+  inputTwo: string = 'Message';
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
@@ -47,6 +50,26 @@ export class AnnouncementsComponent implements OnInit {
           .sort((a: any, b: any) => b.date - a.date);
       },
     });
+  }
+
+  async onAnnouncementSubmission(formData: any) {
+    console.log(formData);
+    const newMessage = {
+      title: formData.Title,
+      message: formData.Message,
+    };
+    try {
+      const request = await axios.post(
+        `http://localhost:8080/company/${this.companyId}/announcements`,
+        newMessage
+      );
+      console.log(request.data);
+    } catch (err) {
+      this.error = 'Login Error';
+      console.log(err);
+    }
+    this.closeOverlay();
+    this.getAnnouncements();
   }
 
   showOverlay() {

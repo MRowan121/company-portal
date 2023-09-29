@@ -1,0 +1,28 @@
+<div class="announcement-overlay">
+  <div class="announcement-container">
+    <div class="exit-button" (click)="closeOverlay()">
+      <img class="exit-icon" src="assets/exit.svg" alt="exit" />
+    </div>
+    <form class="form-container">
+      <input
+        type="text"
+        id="inputOne"
+        [name]="inputOne"
+        placeholder="{{ inputOne }}"
+        [(ngModel)]="formData[inputOne]"
+        required
+      />
+      <input
+        type="text"
+        id="inputTwo"
+        [name]="inputTwo"
+        placeholder="{{ inputTwo }}"
+        [(ngModel)]="formData[inputTwo]"
+        required
+      />
+    </form>
+    <div>
+      <button class="submit-btn" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</div>

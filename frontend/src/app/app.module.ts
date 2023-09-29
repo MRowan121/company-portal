@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
@@ -14,7 +14,8 @@ import { ModalComponent } from './modal/modal.component';
 import { DataService } from './data.service';
 import { AnnouncementOverlayComponent } from './Components/announcement-overlay/announcement-overlay.component';
 import { ProjectOverlayComponent } from './Components/project-overlay/project-overlay.component';
-
+import { CreateModalComponent } from './Components/create-modal/create-modal.component';
+import { NewUserModalComponent } from './Components/new-user-modal/new-user-modal.component';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,11 @@ import { ProjectOverlayComponent } from './Components/project-overlay/project-ov
     CompanyComponent,
     ModalComponent,
     AnnouncementOverlayComponent,
-    ProjectOverlayComponent
+    ProjectOverlayComponent,
+    CreateModalComponent,
+    NewUserModalComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [DataService],
   bootstrap: [AppComponent],
 })

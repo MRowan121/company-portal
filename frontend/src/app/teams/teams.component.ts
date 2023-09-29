@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import axios from 'axios';
-import { Console } from 'console';
 import { DataService } from '../data.service';
 
 interface Team {
@@ -31,9 +30,7 @@ export class TeamsComponent implements OnInit {
   }
 
   async getTeams() {
-    // const companyId = localStorage.getItem('selectedCompanyId');
     const request = await axios.get(
-      //HARDCODED COMPANY ID VALUE - REPLACE 6 WITH $companyId
       `http://localhost:8080/company/${this.companyId}/teams`
     );
     console.log(request.data);
@@ -50,16 +47,13 @@ export class TeamsComponent implements OnInit {
       .sort((a: any, b: any) => a.teamId - b.teamId);
     this.getMemberNames();
     this.getProjects(this.companyId);
-    // console.log(this.teams);
   }
 
   async getProjects(companyId: any) {
     this.teams.forEach(async (team: Team) => {
-      console.log(team.teamId);
       const request = await axios.get(
         `http://localhost:8080/company/${companyId}/teams/${team.teamId}/projects`
       );
-      console.log(request.data);
       team.projects = request.data;
     });
   }
@@ -77,7 +71,6 @@ export class TeamsComponent implements OnInit {
   openProjects(team: Team) {
     const navigationExtras: NavigationExtras = {
       state: {
-        projects: team.projects,
         teamName: team.name,
         teamId: team.teamId,
       },
@@ -94,16 +87,5 @@ export class TeamsComponent implements OnInit {
         name: `${obj.profile.firstname} ${obj.profile.lastName}[0].`,
       };
     });
-    console.log(this.users);
-  }
-
-  onClick() {
-    if ((this.isHidden = false)) {
-      this.isHidden = true;
-      console.log(this.isHidden);
-    }
-    if ((this.isHidden = true)) {
-      this.isHidden = false;
-    }
   }
 }

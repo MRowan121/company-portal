@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
+import { DataService } from '../data.service';
 
 interface User {
   name: string;
@@ -17,7 +18,11 @@ interface User {
 })
 export class UserRegistryComponent implements OnInit {
   users: User[] = [];
-  constructor(private router: Router) {}
+  showForm: boolean = false;
+  error: string = '';
+  companyId: string = this.dataService.getCompany().toString();
+
+  constructor(private router: Router, private dataService: DataService) {}
   ngOnInit() {
     this.getCompanyUsers();
   }
@@ -36,6 +41,40 @@ export class UserRegistryComponent implements OnInit {
         status: obj.status,
       };
     });
-    console.log(request.data)
+  }
+
+  async onSubmission(formData: any) {
+    const newUser = {
+      credentials: {
+        username: formData['username'],
+        password: formData['password'],
+      },
+      profile: {
+        firstName: formData['firstName'],
+        lastName: formData['lastName'],
+        phone: formData['phone'],
+        email: formData['email'],
+      },
+      admin: formData['admin'],
+    };
+    try {
+      await axios.post(
+        `http://localhost:8080/company/${this.companyId}/user`,
+        newUser
+      );
+    } catch (err) {
+      this.error = 'Login Error';
+      console.log(err);
+    }
+    this.closeOverlay();
+    this.getCompanyUsers();
+  }
+
+  showOverlay() {
+    this.showForm = !this.showForm;
+  }
+
+  closeOverlay() {
+    this.showForm = false;
   }
 }

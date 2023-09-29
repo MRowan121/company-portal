@@ -18,9 +18,11 @@
       </div>
     </div>
   </div>
-  <app-project-overlay
+  <app-create-modal
+    [inputOne]="inputOne"
+    [inputTwo]="inputTwo"
     *ngIf="showForm"
-    [teamId]="teamId"
     (hideOverlay)="showOverlay()"
-  ></app-project-overlay>
+    (formSubmitted)="onSubmission($event)"
+  ></app-create-modal>
 </div>
