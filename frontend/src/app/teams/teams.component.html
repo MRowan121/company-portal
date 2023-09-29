@@ -2,7 +2,13 @@
 <div class="teams">
   <div class="heading-container">
     <h1>Teams</h1>
-    <button *ngIf="isAdmin === 'true'" class="new-team-btn">New</button>
+    <button
+      *ngIf="isAdmin === 'true'"
+      class="new-team-btn"
+      (click)="showOverlay()"
+    >
+      New
+    </button>
   </div>
   <div class="team-container">
     <div
@@ -20,4 +26,13 @@
       </div>
     </div>
   </div>
+  <app-create-modal
+    [inputOne]="inputOne"
+    [inputTwo]="inputTwo"
+    [showTeamForm]="showTeamForm"
+    [users]="users"
+    *ngIf="showCreateForm"
+    (hideOverlay)="showOverlay()"
+    (formSubmitted)="onCreation($event)"
+  ></app-create-modal>
 </div>

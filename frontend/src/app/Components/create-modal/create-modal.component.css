@@ -18,7 +18,7 @@
   position: relative;
   box-sizing: border-box;
   width: 40%;
-  height: 400px;
+  height: 500px;
   margin-left: 20px;
   margin-right: 20px;
   padding: 40px;
@@ -122,4 +122,11 @@ input {
   font-weight: 400;
   line-height: 30px;
   word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+em {
+  font-size: 15px;
 }

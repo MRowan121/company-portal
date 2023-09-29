@@ -29,6 +29,21 @@
         <option [ngValue]="false">No</option>
       </select>
     </div>
+    <div class="active-select" *ngIf="showTeamForm">
+      <p>
+        Select Members <br />
+        <em
+          >For windows: Hold (ctrl) + click <br />
+          For Mac: Hold ⌘ + click</em
+        >
+      </p>
+      <select multiple class="minimal" [(ngModel)]="formData.members">
+        <option value="none" selected disabled hidden>Pick an option</option>
+        <option *ngFor="let user of users" [ngValue]="user">
+          {{ user.profile.firstName }} {{ user.profile.lastName[0] }}.
+        </option>
+      </select>
+    </div>
     <div>
       <button class="submit-btn" (click)="onSubmit()">Submit</button>
     </div>

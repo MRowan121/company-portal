@@ -10,6 +10,8 @@ export class CreateModalComponent implements OnInit {
 
   @Input() inputOne: string = '';
   @Input() inputTwo: string = '';
+  @Input() users: any[] = [];
+  @Input() showTeamForm: boolean = false;
   @Input() showEditForm: boolean = false;
   @Output() hideOverlay = new EventEmitter<any>();
   @Output() formSubmitted = new EventEmitter<any>();
