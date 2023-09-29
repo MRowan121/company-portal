@@ -3,18 +3,35 @@
   <p class="back-Btn" routerLink="/teams">&larr; Back</p>
   <div class="heading-container">
     <h1>Projects for {{ teamName }}</h1>
-    <button class="new-project-btn">New</button>
+    <button
+      *ngIf="isAdmin === 'true'"
+      class="new-project-btn"
+      (click)="showCreateOverlay()"
+    >
+      New
+    </button>
   </div>
   <div class="project-container">
     <div class="project-item" *ngFor="let project of projects">
       <div class="project-details">
-        <p>{{ project.name }}</p>
-        <p>{{ project.active }}</p>
+        <p class="project-name">{{ project.name }}</p>
+        <p *ngIf="project.active" class="true">Active</p>
+        <p *ngIf="!project.active" class="false">Inactive</p>
       </div>
       <div class="project-details-cont">
         <p>{{ project.description }}</p>
-        <button class="new-project-btn">Edit</button>
+        <button class="edit-project-btn" (click)="showEditOverlay(project)">
+          Edit
+        </button>
       </div>
     </div>
   </div>
+  <app-create-modal
+    [inputOne]="inputOne"
+    [inputTwo]="inputTwo"
+    [showEditForm]="showEditForm"
+    *ngIf="showCreateForm || showEditForm"
+    (hideOverlay)="showOverlay()"
+    (formSubmitted)="!showEditForm ? onCreation($event) : onEdit($event)"
+  ></app-create-modal>
 </div>

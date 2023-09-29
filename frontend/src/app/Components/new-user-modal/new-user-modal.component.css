@@ -1,0 +1,212 @@
+.announcement-overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  inset: 0px;
+  background-color: rgba(18, 18, 18, 0.6);
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.announcement-container {
+  position: relative;
+  box-sizing: border-box;
+  width: 450px;
+  /* height: 400px; */
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 40px;
+  z-index: 1;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  color: var(--beige);
+  background: #051622;
+  border: 1px solid var(--blue-text);
+  border-radius: 10px;
+}
+
+.exit-button {
+  margin: 15px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+}
+
+.exit-icon {
+  width: 30px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  height: 50%;
+  justify-content: space-around;
+}
+
+input {
+  font-family: Mulish;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0px;
+  color: #1ba098bf;
+  background-color: #051622;
+  border: 0px;
+  border-bottom: 1px white solid;
+}
+
+::placeholder {
+  opacity: 1;
+  color: #1ba098bf;
+  text-align: left;
+  background-color: #051622;
+}
+
+.submit-btn {
+  width: 120px;
+  height: 40px;
+  background: #1ba098;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10.29px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  color: white;
+  font-size: 15px;
+  font-family: Mulish;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.25px;
+  word-wrap: break-word;
+}
+
+.test {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  justify-content: space-between;
+}
+
+.test-2 {
+  flex: 1;
+  padding: 0.5rem;
+  max-width: calc(50% - 1rem);
+}
+
+.test-3 {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  flex-basis: 100%;
+  max-width: 100%;
+}
+
+.detailsForm {
+  background-color: rgb(38 38 38);
+  color: rgb(250 250 249);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  height: 2.25rem;
+  width: 100%;
+  line-height: 2rem;
+  display: block;
+  text-align: left;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-width: 1px;
+  border-color: transparent;
+  border-radius: 0.25rem;
+}
+
+select {
+  /* styling */
+  background-color: white;
+  border: thin solid blue;
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+
+  /* reset */
+
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* arrows */
+
+select.minimal {
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
+}
+
+select.minimal:focus {
+  background-image: linear-gradient(45deg, green 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, green 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em,
+    calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
+  border-color: green;
+  outline: 0;
+}
+
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
+body {
+  background-color: rgb(0, 159, 214);
+  font: bold 1em/100% "Helvetica Neue", Arial, sans-serif;
+  padding: 2em 0;
+  text-align: center;
+}
+h1 {
+  color: white;
+  line-height: 120%;
+  margin: 0 auto 2rem auto;
+  max-width: 30rem;
+}
+
+.admin-select {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-select > p {
+  color: #deb992;
+  font-size: 20px;
+  font-family: Mulish;
+  font-weight: 400;
+  line-height: 30px;
+  word-wrap: break-word;
+}

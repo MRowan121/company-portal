@@ -1,110 +1,94 @@
-.titlecard{
-height: 183px; 
-top: 74px;
-left: 466px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-
+.titlecard {
+  height: 183px;
+  top: 74px;
+  left: 466px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .titlecard .main {
-color: #1BA098;
-font-family: Mulish;
-font-size: 72px;
-font-weight: 400;
-line-height: 108px;
-letter-spacing: 0px;
-margin-bottom: 0%;
-
-
-
+  color: #1ba098;
+  font-family: Mulish;
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 108px;
+  letter-spacing: 0px;
+  margin-bottom: 0%;
 }
 
-.titlecard .sub{
-color: #1BA098;
-font-family: Mulish;
-font-size: 48px;
-font-weight: 400;
-line-height: 72px;
-letter-spacing: 0px;
-margin-top: 0%;
-
-
+.titlecard .sub {
+  color: #1ba098;
+  font-family: Mulish;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 72px;
+  letter-spacing: 0px;
+  margin-top: 0%;
 }
 
-.loginbox{
-    width: 660px;
-    height: 604px;
-    top: 323px;
-    left: 534px;
-    border-width: 5px;
-    border-radius: 15px;
-    border-style: solid;
-    border-color: #DEB992;
-    display:flex;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    
+.loginbox {
+  width: 50%;
+  height: 70%;
+  border-width: 5px;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: #deb992;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.inputs{
-    font-family: Mulish;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 30px;
-    letter-spacing: 0px;
-    text-align: left;
-    color: #1BA098BF;
-    
-    
+.inputs {
+  font-family: Mulish;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #1ba098bf;
 }
 
-.inputfields{
-    font-family: Mulish;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 30px;
-    letter-spacing: 0px;
-    color: #1BA098BF;
-    background-color: #051622;
-    border: 0px;
-    border-bottom: 1px white solid;
-   
+.inputfields {
+  font-family: Mulish;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0px;
+  color: #1ba098bf;
+  background-color: #051622;
+  border: 0px;
+  border-bottom: 1px white solid;
 }
 
-::placeholder{
-    opacity: 1;
-    color: #1BA098BF;
-    text-align: center;
-    background-color: #051622;
-    
+::placeholder {
+  opacity: 1;
+  color: #1ba098bf;
+  text-align: center;
+  background-color: #051622;
 }
 
-.loginbutton{
-    width: 160px;
-    height: 52px;
-    /* top: 824px;
+.loginbutton {
+  width: 160px;
+  height: 52px;
+  /* top: 824px;
     left: 784px; */
-    border-radius: 50px;
-    border: 2px;
-    gap: 8px;
-    border: 2px solid #1BA098;
-    background:#051622;
-    color: white;
-    
-    
-
+  border-radius: 50px;
+  border: 2px;
+  gap: 8px;
+  border: 2px solid #1ba098;
+  background: #051622;
+  color: white;
 }
 
-.loginbutton:hover{
-    cursor: pointer;
-    background-color: #1BA098;
+.loginbutton:hover {
+  cursor: pointer;
+  background-color: #1ba098;
 }
 
-.buttonplacement{
-    display: flex;
+.buttonplacement {
+  display: flex;
 }

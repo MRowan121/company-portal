@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
@@ -10,10 +10,9 @@ import { TeamsComponent } from './teams/teams.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
 import { CompanyComponent } from './company/company.component';
-import { ModalComponent } from './Components/modal/modal.component';
 import { DataService } from './data.service';
-import { FormsModule } from '@angular/forms';
-
+import { CreateModalComponent } from './Components/create-modal/create-modal.component';
+import { NewUserModalComponent } from './Components/new-user-modal/new-user-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     ProjectsComponent,
     UserRegistryComponent,
     CompanyComponent,
-    ModalComponent
+    CreateModalComponent,
+    NewUserModalComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [DataService],
