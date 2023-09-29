@@ -19,9 +19,15 @@ interface Team {
 export class TeamsComponent implements OnInit {
   teams: Team[] = [];
   isHidden: boolean = true;
-  users: string[] = [];
+  users: any[] = [];
   companyId: string = this.dataService.getCompany().toString();
   isAdmin: string | null = localStorage.getItem('isAdmin');
+  showCreateForm: boolean = false;
+  showTeamForm: boolean = false;
+  inputOne: string = 'Team Name';
+  inputTwo: string = 'Description';
+  error: string = '';
+  newTeam: any[] = [];
 
   constructor(private router: Router, private dataService: DataService) {}
   ngOnInit() {
@@ -86,11 +92,8 @@ export class TeamsComponent implements OnInit {
     const request = await axios.get(
       `http://localhost:8080/company/${companyId}/users`
     );
-    this.users = request.data.map((obj: any) => {
-      return {
-        name: `${obj.profile.firstname} ${obj.profile.lastName}[0].`,
-      };
-    });
+    for (const user of request.data) this.users.push(user);
+    console.log(this.users);
   }
 
   openProjects(team: Team) {
@@ -101,5 +104,34 @@ export class TeamsComponent implements OnInit {
       },
     };
     this.router.navigate(['/teams/projects'], navigationExtras);
+  }
+
+  async onCreation(formData: any) {
+    const newTeam = {
+      name: formData['Team Name'],
+      description: formData['Description'],
+      teammates: formData.members,
+    };
+    try {
+      await axios.post(
+        `http://localhost:8080/company/${this.companyId}/teams`,
+        newTeam
+      );
+    } catch (err) {
+      this.error = 'Login Error';
+      console.log(err);
+    }
+    this.closeOverlay();
+    this.getTeams();
+  }
+
+  showOverlay() {
+    this.showCreateForm = !this.showCreateForm;
+    this.showTeamForm = true;
+  }
+
+  closeOverlay() {
+    this.showTeamForm = false;
+    this.showCreateForm = false;
   }
 }
