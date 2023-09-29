@@ -96,15 +96,13 @@ input {
   flex-wrap: wrap;
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
-  justify-content: space-between; /* To evenly distribute the items */
+  justify-content: space-between;
 }
 
 .test-2 {
-  flex: 1; /* Use flex property for equal distribution */
+  flex: 1;
   padding: 0.5rem;
-  max-width: calc(
-    50% - 1rem
-  ); /* Adjust the max-width to leave space between items */
+  max-width: calc(50% - 1rem);
 }
 
 .test-3 {
@@ -113,8 +111,8 @@ input {
 }
 
 .full-width {
-  flex-basis: 100%; /* Set the third input to occupy 100% of the available width */
-  max-width: 100%; /* Ensure it doesn't exceed the available width */
+  flex-basis: 100%;
+  max-width: 100%;
 }
 
 .detailsForm {

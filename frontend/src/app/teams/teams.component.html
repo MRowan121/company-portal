@@ -2,7 +2,7 @@
 <div class="teams">
   <div class="heading-container">
     <h1>Teams</h1>
-    <button class="new-team-btn">New</button>
+    <button *ngIf="isAdmin === 'true'" class="new-team-btn">New</button>
   </div>
   <div class="team-container">
     <div

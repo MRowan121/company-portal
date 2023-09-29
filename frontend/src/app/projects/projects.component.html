@@ -3,7 +3,13 @@
   <p class="back-Btn" routerLink="/teams">&larr; Back</p>
   <div class="heading-container">
     <h1>Projects for {{ teamName }}</h1>
-    <button class="new-project-btn" (click)="showOverlay()">New</button>
+    <button
+      *ngIf="isAdmin === 'true'"
+      class="new-project-btn"
+      (click)="showCreateOverlay()"
+    >
+      New
+    </button>
   </div>
   <div class="project-container">
     <div class="project-item" *ngFor="let project of projects">
@@ -14,15 +20,18 @@
       </div>
       <div class="project-details-cont">
         <p>{{ project.description }}</p>
-        <button class="edit-project-btn">Edit</button>
+        <button class="edit-project-btn" (click)="showEditOverlay(project)">
+          Edit
+        </button>
       </div>
     </div>
   </div>
   <app-create-modal
     [inputOne]="inputOne"
     [inputTwo]="inputTwo"
-    *ngIf="showForm"
+    [showEditForm]="showEditForm"
+    *ngIf="showCreateForm || showEditForm"
     (hideOverlay)="showOverlay()"
-    (formSubmitted)="onSubmission($event)"
+    (formSubmitted)="!showEditForm ? onCreation($event) : onEdit($event)"
   ></app-create-modal>
 </div>

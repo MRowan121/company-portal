@@ -33,7 +33,6 @@ export class TeamsComponent implements OnInit {
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/teams`
     );
-    console.log(request.data);
     this.teams = request.data
       .map((obj: any) => {
         return {
@@ -45,17 +44,22 @@ export class TeamsComponent implements OnInit {
         };
       })
       .sort((a: any, b: any) => a.teamId - b.teamId);
+    this.filterCompanyTeams();
+
     this.getMemberNames();
     this.getProjects(this.companyId);
   }
 
-  async getProjects(companyId: any) {
-    this.teams.forEach(async (team: Team) => {
-      const request = await axios.get(
-        `http://localhost:8080/company/${companyId}/teams/${team.teamId}/projects`
-      );
-      team.projects = request.data;
-    });
+  filterCompanyTeams() {
+    const currentUser = this.dataService.getUser();
+
+    if (this.isAdmin === 'false') {
+      this.teams = this.teams.filter((team: any) => {
+        return team.memberProfiles.some(
+          (profile: any) => profile.id === currentUser.id
+        );
+      });
+    }
   }
 
   getMemberNames() {
@@ -68,15 +72,15 @@ export class TeamsComponent implements OnInit {
     );
   }
 
-  openProjects(team: Team) {
-    const navigationExtras: NavigationExtras = {
-      state: {
-        teamName: team.name,
-        teamId: team.teamId,
-      },
-    };
-    this.router.navigate(['/teams/projects'], navigationExtras);
+  async getProjects(companyId: any) {
+    this.teams.forEach(async (team: Team) => {
+      const request = await axios.get(
+        `http://localhost:8080/company/${companyId}/teams/${team.teamId}/projects`
+      );
+      team.projects = request.data;
+    });
   }
+
   async getCompanyUsers() {
     const companyId = this.dataService.getCompany();
     const request = await axios.get(
@@ -87,5 +91,15 @@ export class TeamsComponent implements OnInit {
         name: `${obj.profile.firstname} ${obj.profile.lastName}[0].`,
       };
     });
+  }
+
+  openProjects(team: Team) {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        teamName: team.name,
+        teamId: team.teamId,
+      },
+    };
+    this.router.navigate(['/teams/projects'], navigationExtras);
   }
 }

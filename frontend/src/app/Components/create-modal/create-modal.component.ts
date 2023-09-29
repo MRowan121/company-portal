@@ -10,6 +10,7 @@ export class CreateModalComponent implements OnInit {
 
   @Input() inputOne: string = '';
   @Input() inputTwo: string = '';
+  @Input() showEditForm: boolean = false;
   @Output() hideOverlay = new EventEmitter<any>();
   @Output() formSubmitted = new EventEmitter<any>();
 
@@ -17,8 +18,6 @@ export class CreateModalComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    console.log(this.formData);
-    console.log('sup');
     this.formSubmitted.emit(this.formData);
   }
 

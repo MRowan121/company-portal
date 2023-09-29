@@ -10,10 +10,7 @@ import { TeamsComponent } from './teams/teams.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
 import { CompanyComponent } from './company/company.component';
-import { ModalComponent } from './modal/modal.component';
 import { DataService } from './data.service';
-import { AnnouncementOverlayComponent } from './Components/announcement-overlay/announcement-overlay.component';
-import { ProjectOverlayComponent } from './Components/project-overlay/project-overlay.component';
 import { CreateModalComponent } from './Components/create-modal/create-modal.component';
 import { NewUserModalComponent } from './Components/new-user-modal/new-user-modal.component';
 
@@ -27,9 +24,6 @@ import { NewUserModalComponent } from './Components/new-user-modal/new-user-moda
     ProjectsComponent,
     UserRegistryComponent,
     CompanyComponent,
-    ModalComponent,
-    AnnouncementOverlayComponent,
-    ProjectOverlayComponent,
     CreateModalComponent,
     NewUserModalComponent,
   ],

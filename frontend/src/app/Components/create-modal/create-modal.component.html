@@ -21,6 +21,14 @@
         required
       />
     </form>
+    <div class="active-select" *ngIf="showEditForm">
+      <p>Active?</p>
+      <select class="minimal" [(ngModel)]="formData.active">
+        <option value="none" selected disabled hidden>Pick an option</option>
+        <option [ngValue]="true">Yes</option>
+        <option [ngValue]="false">No</option>
+      </select>
+    </div>
     <div>
       <button class="submit-btn" (click)="onSubmit()">Submit</button>
     </div>

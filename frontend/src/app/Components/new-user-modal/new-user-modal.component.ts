@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-new-user-modal',
@@ -23,8 +23,6 @@ export class NewUserModalComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    console.log(this.formData);
-    console.log('sup');
     this.formSubmitted.emit(this.formData);
   }
 

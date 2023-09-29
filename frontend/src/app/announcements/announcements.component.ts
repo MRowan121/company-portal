@@ -53,17 +53,15 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   async onAnnouncementSubmission(formData: any) {
-    console.log(formData);
     const newMessage = {
       title: formData.Title,
       message: formData.Message,
     };
     try {
-      const request = await axios.post(
+      await axios.post(
         `http://localhost:8080/company/${this.companyId}/announcements`,
         newMessage
       );
-      console.log(request.data);
     } catch (err) {
       this.error = 'Login Error';
       console.log(err);
