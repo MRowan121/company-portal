@@ -1,4 +1,4 @@
-.announcement-overlay {
+.modal-overlay {
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -14,7 +14,7 @@
   flex-direction: column;
 }
 
-.announcement-container {
+.modal-container {
   position: relative;
   box-sizing: border-box;
   width: 40%;
@@ -30,8 +30,8 @@
   flex-direction: column;
   color: var(--beige);
   background: #051622;
-  border: 1px solid var(--blue-text);
-  border-radius: 10px;
+  border: 1px solid white;
+  border-radius: 20px;
 }
 
 .exit-button {
@@ -54,16 +54,6 @@
   justify-content: space-around;
 }
 
-.input-fName {
-  padding: 0.5rem;
-  flex-basis: 66.7%;
-}
-
-.input-lName {
-  padding: 0.5rem;
-  flex-basis: 33.3%;
-}
-
 input {
   font-family: Mulish;
   font-size: 20px;
@@ -81,6 +71,7 @@ input {
   color: #1ba098bf;
   text-align: center;
   background-color: #051622;
+  font-size: xx-large;
 }
 
 .submit-btn {
@@ -99,13 +90,6 @@ input {
   text-transform: uppercase;
   letter-spacing: 1.25px;
   word-wrap: break-word;
-}
-
-.input-container {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
 }
 
 .active-select {

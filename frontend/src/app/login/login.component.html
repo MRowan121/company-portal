@@ -9,6 +9,11 @@
   <h2 class="sub">A FINAL APP</h2>
 </div>
 <div class="loginbox">
+  <img
+    class="svg-image"
+    src="assets/home-icon.svg"
+    routerLink="/announcements"
+  />
   <form>
     <div class="inputs">
       <!-- POST /users/login -->
@@ -20,6 +25,7 @@
         id="username"
         name="username"
         placeholder="Username"
+        autocomplete="off"
       /><br /><br />
 
       <input
@@ -32,7 +38,7 @@
         placeholder="Password"
       /><br /><br />
     </div>
-    <div>
+    <div class="submit-container">
       <input
         class="loginbutton"
         type="submit"

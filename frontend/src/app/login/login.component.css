@@ -1,5 +1,4 @@
 .titlecard {
-  height: 183px;
   top: 74px;
   left: 466px;
   display: flex;
@@ -28,16 +27,26 @@
   margin-top: 0%;
 }
 
+.svg-image {
+  height: 10rem;
+  width: 10rem;
+  margin-right: 0.75rem;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #0d3a59;
+  margin-left: 1rem;
+}
+
 .loginbox {
   width: 50%;
-  height: 70%;
+  height: 60%;
   border-width: 5px;
   border-radius: 15px;
   border-style: solid;
   border-color: #deb992;
   display: flex;
   margin: auto;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
 }
@@ -71,11 +80,14 @@
   background-color: #051622;
 }
 
+.submit-container {
+  display: flex;
+  justify-content: center;
+}
+
 .loginbutton {
   width: 160px;
   height: 52px;
-  /* top: 824px;
-    left: 784px; */
   border-radius: 50px;
   border: 2px;
   gap: 8px;
