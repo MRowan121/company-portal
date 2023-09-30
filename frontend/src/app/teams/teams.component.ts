@@ -2,14 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import axios from 'axios';
 import { DataService } from '../data.service';
-
-interface Team {
-  teamId: number;
-  name: string;
-  projects: any[];
-  memberProfiles: string[];
-  memberNames: string[];
-}
+import { TeamDto } from '../interfaces';
 
 @Component({
   selector: 'app-teams',
@@ -17,8 +10,8 @@ interface Team {
   styleUrls: ['./teams.component.css'],
 })
 export class TeamsComponent implements OnInit {
-  teams: Team[] = [];
-  isHidden: boolean = true;
+  teams: TeamDto[] = [];
+  projectCounts: { [teamId: number]: number } = {};
   users: any[] = [];
   companyId: string = this.dataService.getCompany().toString();
   isAdmin: string | null = localStorage.getItem('isAdmin');
@@ -27,7 +20,6 @@ export class TeamsComponent implements OnInit {
   inputOne: string = 'Team Name';
   inputTwo: string = 'Description';
   error: string = '';
-  newTeam: any[] = [];
 
   constructor(private router: Router, private dataService: DataService) {}
   ngOnInit() {
@@ -39,52 +31,32 @@ export class TeamsComponent implements OnInit {
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/teams`
     );
-    this.teams = request.data
-      .map((obj: any) => {
-        return {
-          teamId: obj.id,
-          name: obj.name,
-          projects: [],
-          memberProfiles: obj.teammates,
-          memberNames: [],
-        };
-      })
-      .sort((a: any, b: any) => a.teamId - b.teamId);
-    this.filterCompanyTeams();
+    this.teams = request.data.sort((a: any, b: any) => a.id - b.id);
 
-    this.getMemberNames();
-    this.getProjects(this.companyId);
+    // Populate the projectCounts for each team
+    for (const team of this.teams) {
+      const numOfProjects = await this.getProjects(team.id);
+      this.projectCounts[team.id] = numOfProjects;
+    }
+    this.filterCompanyTeams();
   }
 
   filterCompanyTeams() {
     const currentUser = this.dataService.getUser();
-
     if (this.isAdmin === 'false') {
       this.teams = this.teams.filter((team: any) => {
-        return team.memberProfiles.some(
+        return team.teammates.some(
           (profile: any) => profile.id === currentUser.id
         );
       });
     }
   }
 
-  getMemberNames() {
-    this.teams.forEach((team: Team) =>
-      team.memberProfiles.forEach((member: any) => {
-        team.memberNames.push(
-          `${member.profile.firstName} ${member.profile.lastName[0]}.`
-        );
-      })
+  async getProjects(teamId: number) {
+    const request = await axios.get(
+      `http://localhost:8080/company/${this.companyId}/teams/${teamId}/projects`
     );
-  }
-
-  async getProjects(companyId: any) {
-    this.teams.forEach(async (team: Team) => {
-      const request = await axios.get(
-        `http://localhost:8080/company/${companyId}/teams/${team.teamId}/projects`
-      );
-      team.projects = request.data;
-    });
+    return request.data.length;
   }
 
   async getCompanyUsers() {
@@ -93,14 +65,13 @@ export class TeamsComponent implements OnInit {
       `http://localhost:8080/company/${companyId}/users`
     );
     for (const user of request.data) this.users.push(user);
-    console.log(this.users);
   }
 
-  openProjects(team: Team) {
+  openProjects(team: TeamDto) {
     const navigationExtras: NavigationExtras = {
       state: {
         teamName: team.name,
-        teamId: team.teamId,
+        teamId: team.id,
       },
     };
     this.router.navigate(['/teams/projects'], navigationExtras);

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
+import { CompanyDto, FullUserDTO } from '../interfaces';
 
 @Component({
   selector: 'app-company',
@@ -10,22 +11,23 @@ import { DataService } from '../data.service';
 export class CompanyComponent implements OnInit {
   constructor(private router: Router, private dataService: DataService) {}
 
-  companyNames: any[] = [];
-  user: any = this.dataService.getUser();
+  companyNames: string[] = [];
+  user: FullUserDTO = this.dataService.getUser();
   selectedCompanyId: number = 0;
 
   ngOnInit() {
     this.getCompanies();
-    console.log(this.user);
   }
 
   async getCompanies() {
-    this.companyNames = this.user.companies.map((company: any) => company.name);
+    this.companyNames = this.user.companies.map(
+      (company: CompanyDto) => company.name
+    );
   }
 
   chooseCompany(value: string) {
     const selectedCompany = this.user.companies.filter(
-      (company: any) => company.name === value
+      (company: CompanyDto) => company.name === value
     );
     this.dataService.setCompany(selectedCompany[0].id);
     this.selectedCompanyId = selectedCompany[0].id;

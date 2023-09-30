@@ -27,7 +27,7 @@ export interface TeamDto {
   id: number;
   name: string;
   description: string;
-  users: BasicUserDto[];
+  teammates: BasicUserDto[];
 }
 
 export interface BasicUserDto {

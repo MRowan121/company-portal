@@ -18,11 +18,13 @@
     >
       <div class="card-header">
         <p class="team-name">{{ team.name }}</p>
-        <p># of Projects: {{ team.projects.length }}</p>
+        <p># of Projects: {{ projectCounts[team.id] }}</p>
       </div>
       <h3>Members</h3>
       <div class="card-body">
-        <p *ngFor="let name of team.memberNames">{{ name }}</p>
+        <p *ngFor="let teammate of team.teammates">
+          {{ teammate.profile.firstName }} {{ teammate.profile.lastName[0] }}.
+        </p>
       </div>
     </div>
   </div>

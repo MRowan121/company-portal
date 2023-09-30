@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     this.password = value;
   }
 
-  async validateUser(e: any) {
+  async validateUser(e: MouseEvent) {
     e.preventDefault();
     this.error = '';
     if (this.username === '') {
