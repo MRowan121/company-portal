@@ -18,7 +18,7 @@
     >
       <div class="card-header">
         <p class="team-name">{{ team.name }}</p>
-        <p># of Projects: {{ projectCounts[team.id] }}</p>
+        <p># of Projects: {{ teamProjects[team.id]?.length || 0 }}</p>
       </div>
       <h3>Members</h3>
       <div class="card-body">

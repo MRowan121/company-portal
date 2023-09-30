@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import { DataService } from '../data.service';
-import { AnnouncementDTO } from '../interfaces';
+import { AnnouncementDto } from '../interfaces';
 import { from } from 'rxjs';
 
 @Component({
@@ -11,7 +11,7 @@ import { from } from 'rxjs';
 })
 export class AnnouncementsComponent implements OnInit {
   companyId: string = this.dataService.getCompany().toString();
-  announcements: AnnouncementDTO[] = [];
+  announcements: AnnouncementDto[] = [];
   isAdmin: string | null = localStorage.getItem('isAdmin');
   showForm: boolean = false;
   error: string = '';

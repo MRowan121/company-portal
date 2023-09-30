@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
-import { CompanyDto, FullUserDTO } from '../interfaces';
+import { CompanyDto, FullUserDto } from '../interfaces';
 
 @Component({
   selector: 'app-company',
@@ -12,7 +12,7 @@ export class CompanyComponent implements OnInit {
   constructor(private router: Router, private dataService: DataService) {}
 
   companyNames: string[] = [];
-  user: FullUserDTO = this.dataService.getUser();
+  user: FullUserDto = this.dataService.getUser();
   selectedCompanyId: number = 0;
 
   ngOnInit() {

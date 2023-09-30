@@ -1,4 +1,4 @@
-export interface FullUserDTO {
+export interface FullUserDto {
   id: number;
   profile: ProfileDto;
   isAdmin: boolean;
@@ -38,10 +38,18 @@ export interface BasicUserDto {
   status: string;
 }
 
-export interface AnnouncementDTO {
+export interface AnnouncementDto {
   id: number;
   date: string;
   title: string;
   message: string;
   author: BasicUserDto;
+}
+
+export interface ProjectDto {
+  id: number;
+  name: string;
+  description: string;
+  active: boolean;
+  team: TeamDto;
 }

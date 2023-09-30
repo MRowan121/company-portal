@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import axios from 'axios';
 import { DataService } from '../data.service';
-import { TeamDto } from '../interfaces';
+import { ProjectDto, TeamDto } from '../interfaces';
 
 @Component({
   selector: 'app-teams',
@@ -11,7 +11,7 @@ import { TeamDto } from '../interfaces';
 })
 export class TeamsComponent implements OnInit {
   teams: TeamDto[] = [];
-  projectCounts: { [teamId: number]: number } = {};
+  teamProjects: { [teamId: number]: ProjectDto[] | undefined } = {};
   users: any[] = [];
   companyId: string = this.dataService.getCompany().toString();
   isAdmin: string | null = localStorage.getItem('isAdmin');
@@ -35,8 +35,8 @@ export class TeamsComponent implements OnInit {
 
     // Populate the projectCounts for each team
     for (const team of this.teams) {
-      const numOfProjects = await this.getProjects(team.id);
-      this.projectCounts[team.id] = numOfProjects;
+      const numOfProjects = await this.getTeamProjects(team.id);
+      this.teamProjects[team.id] = numOfProjects;
     }
     this.filterCompanyTeams();
   }
@@ -52,11 +52,11 @@ export class TeamsComponent implements OnInit {
     }
   }
 
-  async getProjects(teamId: number) {
+  async getTeamProjects(teamId: number) {
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/teams/${teamId}/projects`
     );
-    return request.data.length;
+    return request.data;
   }
 
   async getCompanyUsers() {
@@ -70,6 +70,7 @@ export class TeamsComponent implements OnInit {
   openProjects(team: TeamDto) {
     const navigationExtras: NavigationExtras = {
       state: {
+        teamProjects: this.teamProjects[team.id],
         teamName: team.name,
         teamId: team.id,
       },

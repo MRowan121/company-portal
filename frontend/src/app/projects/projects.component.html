@@ -12,7 +12,7 @@
     </button>
   </div>
   <div class="project-container">
-    <div class="project-item" *ngFor="let project of projects">
+    <div class="project-item" *ngFor="let project of teamProjects">
       <div class="project-details">
         <p class="project-name">{{ project.name }}</p>
         <p *ngIf="project.active" class="true">Active</p>

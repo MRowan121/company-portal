@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { DataService } from '../data.service';
+import { ProjectDto } from '../interfaces';
 
 @Component({
   selector: 'app-projects',
@@ -9,9 +10,10 @@ import { DataService } from '../data.service';
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  projects: any[] = [];
+  // projects: any[] = [];
   teamName: string = '';
   teamId: number = 0;
+  teamProjects: ProjectDto[] = [];
   companyId: string = this.dataService.getCompany().toString();
   showCreateForm: boolean = false;
   showEditForm: boolean = false;
@@ -28,17 +30,17 @@ export class ProjectsComponent implements OnInit {
     if (receivedTeamName) this.teamName = receivedTeamName;
     const receivedTeamId = input?.extras?.state?.['teamId'];
     if (receivedTeamId) this.teamId = receivedTeamId;
+    const receivedTeamProjects = input?.extras?.state?.['teamProjects'];
+    if (receivedTeamProjects) this.teamProjects = receivedTeamProjects;
   }
 
-  ngOnInit() {
-    this.getProjects();
-  }
+  ngOnInit() {}
 
   async getProjects() {
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/teams/${this.teamId}/projects`
     );
-    this.projects = request.data;
+    this.teamProjects = request.data;
   }
 
   async onCreation(formData: any) {
