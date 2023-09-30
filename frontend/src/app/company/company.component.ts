@@ -10,21 +10,13 @@ import { DataService } from '../data.service';
 export class CompanyComponent implements OnInit {
   constructor(private router: Router, private dataService: DataService) {}
 
-  isAdmin: string | null = localStorage.getItem('isAdmin');
-  isLoggedIn: boolean = this.dataService.getIsLoggedIn();
   companyNames: any[] = [];
   user: any = this.dataService.getUser();
   selectedCompanyId: number = 0;
 
   ngOnInit() {
     this.getCompanies();
-    if (this.isLoggedIn) {
-      if (this.isAdmin === 'false') {
-        this.router.navigate(['/announcements']);
-      }
-    } else {
-      this.router.navigate(['/select-company']);
-    }
+    console.log(this.user);
   }
 
   async getCompanies() {

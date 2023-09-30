@@ -11,9 +11,6 @@ import { DataService } from '../data.service';
 export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
-  user: any;
-  isAdmin: boolean = false;
-  isLoggedIn: boolean = false;
   error: string = '';
 
   constructor(private router: Router, private dataService: DataService) {}
@@ -49,23 +46,19 @@ export class LoginComponent implements OnInit {
         userToSubmit
       );
 
-      this.user = request.data;
-      this.isAdmin = request.data.admin;
-      this.dataService.setUser(this.user);
-      this.dataService.setCompany(this.user.companies[0].id);
-      this.dataService.setIsAdmin(this.isAdmin);
-      localStorage.setItem('isAdmin', this.isAdmin.toString());
+      this.dataService.setUser(request.data);
+      this.dataService.setCompany(request.data.companies[0].id);
+      this.dataService.setIsAdmin(request.data.admin);
+      localStorage.setItem('isAdmin', request.data.admin.toString());
 
-      this.isLoggedIn = true;
-      this.dataService.setIsLoggedIn(this.isLoggedIn);
+      this.dataService.setIsLoggedIn(true);
 
-      if (this.isAdmin) {
+      if (request.data.admin) {
         this.router.navigate(['/select-company']);
       }
-      if (!this.isAdmin) {
+      if (!request.data.admin) {
         this.router.navigate(['/announcements']);
       }
-
     } catch (err) {
       this.error = 'Login Error';
       console.log(err);
