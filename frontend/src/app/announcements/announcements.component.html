@@ -15,7 +15,10 @@
     *ngFor="let announcement of announcements"
   >
     <div class="announcement-header">
-      <p>{{ announcement.firstName }} {{ announcement.lastName }}</p>
+      <p>
+        {{ announcement.author.profile.firstName }}
+        {{ announcement.author.profile.lastName }}
+      </p>
       <p>{{ announcement.date | date : "MMMM dd, yyyy" }}</p>
     </div>
     <div class="announcement-body">
@@ -27,6 +30,6 @@
     [inputTwo]="inputTwo"
     *ngIf="showForm"
     (hideOverlay)="showOverlay()"
-    (formSubmitted)="onAnnouncementSubmission($event)"
+    (formSubmitted)="onSubmit($event)"
   ></app-create-modal>
 </div>

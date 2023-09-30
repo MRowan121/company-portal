@@ -4,13 +4,6 @@ import { DataService } from '../data.service';
 import { AnnouncementDTO } from '../interfaces';
 import { from } from 'rxjs';
 
-interface Announcement {
-  firstName: string;
-  lastName: string;
-  message: string;
-  date: string;
-}
-
 @Component({
   selector: 'app-announcements',
   templateUrl: './announcements.component.html',
@@ -18,8 +11,7 @@ interface Announcement {
 })
 export class AnnouncementsComponent implements OnInit {
   companyId: string = this.dataService.getCompany().toString();
-  announcements: Announcement[] = [];
-  user: any = {};
+  announcements: AnnouncementDTO[] = [];
   isAdmin: string | null = localStorage.getItem('isAdmin');
   showForm: boolean = false;
   error: string = '';
@@ -37,22 +29,14 @@ export class AnnouncementsComponent implements OnInit {
 
     observable.subscribe({
       next: (response) => {
-        const data = response.data;
-        this.announcements = data
-          .map((obj: AnnouncementDTO) => {
-            return {
-              firstName: obj.author.profile.firstName,
-              lastName: obj.author.profile.lastName,
-              message: obj.message,
-              date: new Date(obj.date),
-            };
-          })
-          .sort((a: any, b: any) => b.date - a.date);
+        this.announcements = response.data.sort(
+          (a: any, b: any) => b.date - a.date
+        );
       },
     });
   }
 
-  async onAnnouncementSubmission(formData: any) {
+  async onSubmit(formData: any) {
     const newMessage = {
       title: formData.Title,
       message: formData.Message,
