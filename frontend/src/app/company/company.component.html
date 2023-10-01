@@ -9,8 +9,8 @@
     id="company"
   >
     <option value="none" selected disabled hidden>Pick An Option</option>
-    <option *ngFor="let company of companyNames" value="{{ company }}">
-      {{ company }}
+    <option *ngFor="let company of companies" value="{{ company.id }}">
+      {{ company.name }}
     </option>
   </select>
 </div>

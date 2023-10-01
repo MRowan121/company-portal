@@ -10,7 +10,7 @@ import { from } from 'rxjs';
   styleUrls: ['./announcements.component.css'],
 })
 export class AnnouncementsComponent implements OnInit {
-  companyId: string = this.dataService.getCompany().toString();
+  companyId: string = '';
   announcements: AnnouncementDto[] = [];
   isAdmin: string | null = localStorage.getItem('isAdmin');
   showForm: boolean = false;
@@ -24,6 +24,7 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   async getAnnouncements() {
+    this.companyId = this.dataService.getCompany().toString();
     const apiUrl: string = `http://localhost:8080/company/${this.companyId}/announcements`;
     const observable = from(axios.get<any>(apiUrl));
 
