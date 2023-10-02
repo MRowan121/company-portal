@@ -5,7 +5,7 @@ import com.cooksys.groupfinal.dtos.FullUserDto;
 
 public interface UserService {
 
-	FullUserDto login(CredentialsDto credentialsDto);
+    FullUserDto login(CredentialsDto credentialsDto);
 
-   
+
 }

@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 public class BadRequestException extends RuntimeException {
 
-	private static final long serialVersionUID = 2366106203948817192L;
-	
-	private String message;
+    private static final long serialVersionUID = 2366106203948817192L;
+
+    private String message;
 
 }
