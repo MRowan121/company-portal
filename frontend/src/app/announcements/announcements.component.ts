@@ -56,19 +56,15 @@ export class AnnouncementsComponent implements OnInit {
     const newAnnouncement = {
       title: formData.Title,
       message: formData.Message,
-      // author: {
-      //   id: this.user.id,
-      //   profile: {
-      //     firstName: this.user.profile.firstName,
-      //     lastName: this.user.profile.lastName,
-      //     email: this.user.profile.email,
-      //     phone: this.user.profile.phone,
-      //   },
-      //   admin: this.user.admin,
-      //   active: this.user.active,
-      //   status: this.user.status,
-      // },
+      author: {
+        id: this.user.id,
+        profile: this.user.profile,
+        admin: this.user.admin,
+        active: this.user.active,
+        status: this.user.status,
+      },
     };
+    console.log(newAnnouncement);
     try {
       await axios.post(
         `http://localhost:8080/company/${this.companyId}/announcements`,
