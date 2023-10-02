@@ -24,6 +24,6 @@ export class CompanyComponent implements OnInit {
 
   chooseCompany(value: string) {
     localStorage.setItem('selectedCompanyId', value);
-    this.router.navigate(['/announcements']);
+    this.router.navigate([`company/${value}/announcement`]);
   }
 }

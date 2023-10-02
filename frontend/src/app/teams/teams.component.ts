@@ -71,7 +71,6 @@ export class TeamsComponent implements OnInit {
   }
 
   openProjects(team: TeamDto) {
-    console.log(team);
     const navigationExtras: NavigationExtras = {
       state: {
         teamProjects: this.teamProjects[team.id],
@@ -79,7 +78,9 @@ export class TeamsComponent implements OnInit {
         teamId: team.id,
       },
     };
-    this.router.navigate(['/teams/projects'], navigationExtras);
+    const url = `/company/${this.companyId}/teams/${team.id}/projects`;
+
+    this.router.navigate([url], navigationExtras);
   }
 
   async onCreation(formData: any) {

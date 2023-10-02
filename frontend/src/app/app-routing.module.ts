@@ -9,11 +9,20 @@ import { CompanyComponent } from './company/company.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'select-company', component: CompanyComponent },
-  { path: 'announcements', component: AnnouncementsComponent },
-  { path: 'teams', component: TeamsComponent },
-  { path: 'teams/projects', component: ProjectsComponent },
-  { path: 'user-registry', component: UserRegistryComponent },
+  { path: 'company', component: CompanyComponent },
+  {
+    path: 'company/:companyId/announcement',
+    component: AnnouncementsComponent,
+  },
+  { path: 'company/:companyId/teams', component: TeamsComponent },
+  {
+    path: 'company/:companyId/teams/:teamId/projects',
+    component: ProjectsComponent,
+  },
+  {
+    path: 'company/:companyId/user-registry',
+    component: UserRegistryComponent,
+  },
 ];
 
 @NgModule({

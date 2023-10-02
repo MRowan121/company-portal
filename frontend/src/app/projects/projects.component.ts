@@ -14,7 +14,7 @@ export class ProjectsComponent implements OnInit {
   teamName: string = '';
   teamId: number = 0;
   teamProjects: ProjectDto[] = [];
-  companyId: string = this.dataService.getCompany().toString();
+  companyId: string = '';
   showCreateForm: boolean = false;
   showEditForm: boolean = false;
   inputOne: string = 'Project Name';
@@ -34,7 +34,18 @@ export class ProjectsComponent implements OnInit {
     if (receivedTeamProjects) this.teamProjects = receivedTeamProjects;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getCompanyId();
+  }
+
+  getCompanyId() {
+    const url = location.href;
+    const match = url.match(/\/company\/(\d+)\//);
+
+    if (match) {
+      this.companyId = match[1];
+    }
+  }
 
   async getProjects() {
     const request = await axios.get(
@@ -117,5 +128,9 @@ export class ProjectsComponent implements OnInit {
   closeOverlay() {
     this.showEditForm = false;
     this.showCreateForm = false;
+  }
+
+  goBack() {
+    this.router.navigateByUrl(`/company/${this.companyId}/teams`);
   }
 }

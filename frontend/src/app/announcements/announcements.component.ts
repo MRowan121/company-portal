@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
-import { AnnouncementDto } from '../interfaces';
+import { AnnouncementDto, FullUserDto } from '../interfaces';
 import { from } from 'rxjs';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-announcements',
@@ -14,19 +15,31 @@ export class AnnouncementsComponent implements OnInit {
   isAdmin: string | null = '';
   showForm: boolean = false;
   error: string = '';
+  user: any = {};
 
   inputOne: string = 'Title';
   inputTwo: string = 'Message';
 
-  constructor() {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
+    this.user = this.dataService.getUser();
+    console.log(this.user);
     this.getAnnouncements();
+  }
+
+  getCompanyId() {
+    const url = location.href;
+    const match = url.match(/\/company\/(\d+)\//);
+
+    if (match) {
+      this.companyId = match[1];
+    }
   }
 
   async getAnnouncements() {
     this.isAdmin = localStorage.getItem('isAdmin');
-    this.companyId = localStorage.getItem('selectedCompanyId');
+    this.getCompanyId();
     const apiUrl: string = `http://localhost:8080/company/${this.companyId}/announcements`;
     const observable = from(axios.get<any>(apiUrl));
 
@@ -43,6 +56,18 @@ export class AnnouncementsComponent implements OnInit {
     const newAnnouncement = {
       title: formData.Title,
       message: formData.Message,
+      // author: {
+      //   id: this.user.id,
+      //   profile: {
+      //     firstName: this.user.profile.firstName,
+      //     lastName: this.user.profile.lastName,
+      //     email: this.user.profile.email,
+      //     phone: this.user.profile.phone,
+      //   },
+      //   admin: this.user.admin,
+      //   active: this.user.active,
+      //   status: this.user.status,
+      // },
     };
     try {
       await axios.post(

@@ -1,6 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <div class="projects">
-  <p class="back-Btn" routerLink="/teams">&larr; Back</p>
+  <p class="back-Btn" (click)="goBack()">&larr; Back</p>
   <div class="heading-container">
     <h1>Projects for {{ teamName }}</h1>
     <button

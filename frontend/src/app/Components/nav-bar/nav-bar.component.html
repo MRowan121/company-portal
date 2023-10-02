@@ -1,3 +1,22 @@
+<!-- <nav>
+  <div class="nav-left">
+    <img
+      class="svg-image"
+      src="assets/home-icon.svg"
+      routerLink="/announcements"
+    />
+    <span *ngIf="isAdmin === 'true'" class="active-user">ACTING AS ADMIN</span>
+    <span *ngIf="isAdmin === 'false'" class="active-user">{{ userName }}</span>
+  </div>
+  <ul class="nav-links">
+    <li routerLink="company/{{ companyId }}/announcements">Home</li>
+    <li *ngIf="isAdmin === 'true'" routerLink="/select-company">Company</li>
+    <li routerLink="company/{{ companyId }}/teams">Teams</li>
+    <li *ngIf="isAdmin === 'true'" routerLink="/user-registry">Users</li>
+    <li (click)="logOut()" routerLink="/">Logout</li>
+  </ul>
+</nav> -->
+
 <nav>
   <div class="nav-left">
     <img
@@ -9,10 +28,12 @@
     <span *ngIf="isAdmin === 'false'" class="active-user">{{ userName }}</span>
   </div>
   <ul class="nav-links">
-    <li routerLink="/announcements">Home</li>
-    <li *ngIf="isAdmin === 'true'" routerLink="/select-company">Company</li>
-    <li routerLink="/teams">Teams</li>
-    <li *ngIf="isAdmin === 'true'" routerLink="/user-registry">Users</li>
+    <li [routerLink]="['../', 'announcements']">Home</li>
+    <li *ngIf="isAdmin === 'true'" routerLink="/company">Company</li>
+    <li [routerLink]="['../', 'teams']">Teams</li>
+    <li *ngIf="isAdmin === 'true'" [routerLink]="['../', 'user-registry']">
+      Users
+    </li>
     <li (click)="logOut()" routerLink="/">Logout</li>
   </ul>
 </nav>
