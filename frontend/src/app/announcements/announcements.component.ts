@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
-import { DataService } from '../data.service';
 import { AnnouncementDto } from '../interfaces';
 import { from } from 'rxjs';
 
@@ -10,21 +9,24 @@ import { from } from 'rxjs';
   styleUrls: ['./announcements.component.css'],
 })
 export class AnnouncementsComponent implements OnInit {
-  companyId: string = '';
+  companyId: string | null = '';
   announcements: AnnouncementDto[] = [];
-  isAdmin: string | null = localStorage.getItem('isAdmin');
+  isAdmin: string | null = '';
   showForm: boolean = false;
   error: string = '';
+
   inputOne: string = 'Title';
   inputTwo: string = 'Message';
-  constructor(private dataService: DataService) {}
+
+  constructor() {}
 
   ngOnInit() {
     this.getAnnouncements();
   }
 
   async getAnnouncements() {
-    this.companyId = this.dataService.getCompany().toString();
+    this.isAdmin = localStorage.getItem('isAdmin');
+    this.companyId = localStorage.getItem('selectedCompanyId');
     const apiUrl: string = `http://localhost:8080/company/${this.companyId}/announcements`;
     const observable = from(axios.get<any>(apiUrl));
 
@@ -38,14 +40,14 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   async onSubmit(formData: any) {
-    const newMessage = {
+    const newAnnouncement = {
       title: formData.Title,
       message: formData.Message,
     };
     try {
       await axios.post(
         `http://localhost:8080/company/${this.companyId}/announcements`,
-        newMessage
+        newAnnouncement
       );
     } catch (err) {
       this.error = 'Login Error';

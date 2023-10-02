@@ -1,50 +1,18 @@
-<link rel="preconnect" href="https://fonts.googleapis.com%22%3E/" />
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Mulish:wght@200&display=swap"
-  rel="stylesheet"
-/>
-<div class="titlecard">
-  <h1 class="main">COOK SYSTEMS</h1>
-  <h2 class="sub">A FINAL APP</h2>
-</div>
-<div class="loginbox">
-  <img
-    class="svg-image"
-    src="assets/home-icon.svg"
-    routerLink="/announcements"
-  />
-  <form>
-    <div class="inputs">
-      <input
-        #username
-        (change)="getUsername(username.value)"
-        class="inputfields"
-        type="text"
-        id="username"
-        name="username"
-        placeholder="Username"
-        autocomplete="off"
-      /><br /><br />
-
-      <input
-        #password
-        (change)="getPassword(password.value)"
-        class="inputfields"
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Password"
-      /><br /><br />
-    </div>
-    <div class="submit-container">
-      <input
-        class="loginbutton"
-        type="submit"
-        value="Login"
-        (click)="validateUser($event)"
-      />
-      <h1 *ngIf="error !== ''" style="color: red">{{ error }}</h1>
-    </div>
+<div class="login-container">
+  <div class="title">
+    <span class="cook">COOK SYSTEMS<br /></span
+    ><span class="final">A FINAL APP</span>
+  </div>
+  <form class="loginbox" [formGroup]="loginForm" (ngSubmit)="validateUser()">
+    <img
+      class="svg-image"
+      src="assets/home-icon.svg"
+      routerLink="/announcements"
+      alt="Graphic Image"
+    />
+    <input type="text" formControlName="username" placeholder="Username" />
+    <input type="password" formControlName="password" placeholder="Password" />
+    <button type="submit">Log In</button>
+    <p *ngIf="error !== ''">{{ error }}</p>
   </form>
 </div>

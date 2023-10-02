@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../data.service';
 import { CompanyDto } from '../interfaces';
 import axios from 'axios';
 
@@ -10,9 +9,9 @@ import axios from 'axios';
   styleUrls: ['./company.component.css'],
 })
 export class CompanyComponent implements OnInit {
-  constructor(private router: Router, private dataService: DataService) {}
-
   companies: CompanyDto[] = [];
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.getCompanies();
@@ -24,7 +23,7 @@ export class CompanyComponent implements OnInit {
   }
 
   chooseCompany(value: string) {
-    this.dataService.setCompany(+value);
+    localStorage.setItem('selectedCompanyId', value);
     this.router.navigate(['/announcements']);
   }
 }

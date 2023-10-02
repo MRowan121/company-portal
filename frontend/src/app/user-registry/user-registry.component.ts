@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import axios from 'axios';
-import { DataService } from '../data.service';
 
 interface User {
   name: string;
@@ -20,17 +18,17 @@ export class UserRegistryComponent implements OnInit {
   users: User[] = [];
   showForm: boolean = false;
   error: string = '';
-  companyId: string = this.dataService.getCompany().toString();
+  companyId: string | null = '';
 
-  constructor(private dataService: DataService) {}
+  constructor() {}
   ngOnInit() {
     this.getCompanyUsers();
   }
 
   async getCompanyUsers() {
-    const companyId = localStorage.getItem('selectedCompanyId');
+    this.companyId = localStorage.getItem('selectedCompanyId');
     const request = await axios.get(
-      `http://localhost:8080/company/${companyId}/users`
+      `http://localhost:8080/company/${this.companyId}/users`
     );
     this.users = request.data.map((obj: any) => {
       return {

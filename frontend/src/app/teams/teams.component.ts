@@ -12,17 +12,20 @@ import { ProjectDto, TeamDto } from '../interfaces';
 export class TeamsComponent implements OnInit {
   teams: TeamDto[] = [];
   teamProjects: { [teamId: number]: ProjectDto[] | undefined } = {};
-  users: any[] = [];
-  companyId: string = this.dataService.getCompany().toString();
-  isAdmin: string | null = localStorage.getItem('isAdmin');
+  companyId: string | null = '';
+  isAdmin: string | null = '';
   showCreateForm: boolean = false;
   showTeamForm: boolean = false;
+  error: string = '';
+  users: any[] = [];
+
   inputOne: string = 'Team Name';
   inputTwo: string = 'Description';
-  error: string = '';
 
   constructor(private router: Router, private dataService: DataService) {}
   ngOnInit() {
+    this.isAdmin = localStorage.getItem('isAdmin');
+    this.companyId = localStorage.getItem('selectedCompanyId');
     this.getTeams();
     this.getCompanyUsers();
   }
@@ -68,6 +71,7 @@ export class TeamsComponent implements OnInit {
   }
 
   openProjects(team: TeamDto) {
+    console.log(team);
     const navigationExtras: NavigationExtras = {
       state: {
         teamProjects: this.teamProjects[team.id],

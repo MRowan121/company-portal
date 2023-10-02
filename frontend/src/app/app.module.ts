@@ -13,6 +13,7 @@ import { CompanyComponent } from './company/company.component';
 import { DataService } from './data.service';
 import { CreateModalComponent } from './Components/create-modal/create-modal.component';
 import { NewUserModalComponent } from './Components/new-user-modal/new-user-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { NewUserModalComponent } from './Components/new-user-modal/new-user-moda
     CreateModalComponent,
     NewUserModalComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [DataService],
   bootstrap: [AppComponent],
 })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { DataService } from '../data.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,45 +10,33 @@ import { DataService } from '../data.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  username: string = '';
-  password: string = '';
   error: string = '';
+  //
+  loginForm: FormGroup;
 
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(private router: Router, private dataService: DataService) {
+    this.loginForm = new FormGroup({
+      username: new FormControl(''),
+      password: new FormControl(''),
+    });
+  }
   ngOnInit() {}
 
-  getUsername(value: string) {
-    this.username = value;
-  }
+  async validateUser() {
+    const username = this.loginForm.get('username')?.value;
+    const password = this.loginForm.get('password')?.value;
 
-  getPassword(value: string) {
-    this.password = value;
-  }
-
-  async validateUser(e: MouseEvent) {
-    e.preventDefault();
-    this.error = '';
-    if (this.username === '') {
-      this.error = 'Username Empty';
-      return;
-    }
-    if (this.password === '') {
-      this.error = 'Password Empty';
-      return;
-    }
-
-    const userToSubmit = {
-      username: this.username,
-      password: this.password,
+    const credentials = {
+      username: username,
+      password: password,
     };
     try {
       const request = await axios.post(
         'http://localhost:8080/users/login',
-        userToSubmit
+        credentials
       );
 
       this.dataService.setUser(request.data);
-      this.dataService.setCompany(request.data.companies[0].id);
       this.dataService.setIsAdmin(request.data.admin);
       localStorage.setItem('isAdmin', request.data.admin.toString());
 
@@ -55,12 +44,11 @@ export class LoginComponent implements OnInit {
 
       if (request.data.admin) {
         this.router.navigate(['/select-company']);
-      }
-      if (!request.data.admin) {
+      } else {
         this.router.navigate(['/announcements']);
       }
     } catch (err) {
-      this.error = 'Login Error';
+      this.error = 'Invalid credentials. Please try again.';
       console.log(err);
     }
   }
