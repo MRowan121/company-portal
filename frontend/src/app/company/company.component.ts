@@ -10,11 +10,22 @@ import axios from 'axios';
 })
 export class CompanyComponent implements OnInit {
   companies: CompanyDto[] = [];
+  userId: string | null = '';
 
   constructor(private router: Router) {}
 
   ngOnInit() {
+    this.getUserId();
     this.getCompanies();
+  }
+
+  getUserId() {
+    const url = location.href;
+    const match = url.match(/\/user\/(\d+)\//);
+
+    if (match) {
+      this.userId = match[1];
+    }
   }
 
   async getCompanies() {
@@ -24,6 +35,8 @@ export class CompanyComponent implements OnInit {
 
   chooseCompany(value: string) {
     localStorage.setItem('selectedCompanyId', value);
-    this.router.navigate([`company/${value}/announcement`]);
+    this.router.navigate([
+      `user/${this.userId}/company/${value}/announcements`,
+    ]);
   }
 }

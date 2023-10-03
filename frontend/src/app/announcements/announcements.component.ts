@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
-import { AnnouncementDto, FullUserDto } from '../interfaces';
+import { AnnouncementDto } from '../interfaces';
 import { from } from 'rxjs';
-import { DataService } from '../data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-announcements',
@@ -10,9 +10,10 @@ import { DataService } from '../data.service';
   styleUrls: ['./announcements.component.css'],
 })
 export class AnnouncementsComponent implements OnInit {
+  isLoggedIn: boolean = false;
   companyId: string | null = '';
+  userId: string | null = '';
   announcements: AnnouncementDto[] = [];
-  isAdmin: string | null = '';
   showForm: boolean = false;
   error: string = '';
   user: any = {};
@@ -20,26 +21,36 @@ export class AnnouncementsComponent implements OnInit {
   inputOne: string = 'Title';
   inputTwo: string = 'Message';
 
-  constructor(private dataService: DataService) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    this.user = this.dataService.getUser();
-    console.log(this.user);
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      this.router.navigate(['/']);
+    }
+    this.getIdsFromUrl();
+    this.getFullUser();
     this.getAnnouncements();
   }
 
-  getCompanyId() {
+  getIdsFromUrl() {
     const url = location.href;
-    const match = url.match(/\/company\/(\d+)\//);
+    const userMatch = url.match(/\/user\/(\d+)\//);
+    const companyMatch = url.match(/\/company\/(\d+)\//);
 
-    if (match) {
-      this.companyId = match[1];
+    if (userMatch && companyMatch) {
+      this.userId = userMatch[1];
+      this.companyId = companyMatch[1];
     }
   }
 
+  async getFullUser() {
+    const request = await axios.get(
+      `http://localhost:8080/users/${this.userId}`
+    );
+    this.user = request.data;
+  }
+
   async getAnnouncements() {
-    this.isAdmin = localStorage.getItem('isAdmin');
-    this.getCompanyId();
     const apiUrl: string = `http://localhost:8080/company/${this.companyId}/announcements`;
     const observable = from(axios.get<any>(apiUrl));
 
@@ -64,7 +75,6 @@ export class AnnouncementsComponent implements OnInit {
         status: this.user.status,
       },
     };
-    console.log(newAnnouncement);
     try {
       await axios.post(
         `http://localhost:8080/company/${this.companyId}/announcements`,

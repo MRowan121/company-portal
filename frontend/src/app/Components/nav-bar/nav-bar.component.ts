@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DataService } from '../../data.service';
+import { Component, OnInit } from '@angular/core';
+import axios from 'axios';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,30 +7,38 @@ import { DataService } from '../../data.service';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  isAdmin: string | null = localStorage.getItem('isAdmin');
   userName: string = '';
   user: any = {};
   companyId: string | null = '';
+  userId: string | null = '';
 
-  constructor(private dataService: DataService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.getCompanyId();
-    this.user = this.dataService.getUser();
-    this.userName = `${this.user.profile.firstName} ${this.user.profile.lastName[0]}.`;
+    this.getIdsFromUrl();
+    this.getFullUser();
   }
 
-  getCompanyId() {
+  getIdsFromUrl() {
     const url = location.href;
-    const match = url.match(/\/company\/(\d+)\//);
+    const userMatch = url.match(/\/user\/(\d+)\//);
+    const companyMatch = url.match(/\/company\/(\d+)\//);
 
-    if (match) {
-      this.companyId = match[1];
+    if (userMatch && companyMatch) {
+      this.userId = userMatch[1];
+      this.companyId = companyMatch[1];
     }
+  }
+
+  async getFullUser() {
+    const request = await axios.get(
+      `http://localhost:8080/users/${this.userId}`
+    );
+    this.user = request.data;
+    this.userName = `${this.user.profile.firstName} ${this.user.profile.lastName[0]}.`;
   }
 
   logOut() {
     localStorage.setItem('isLoggedIn', 'false');
-    localStorage.setItem('isAdmin', 'false');
   }
 }

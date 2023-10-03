@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
-import { DataService } from '../data.service';
 import { ProjectDto } from '../interfaces';
 
 @Component({
@@ -14,7 +13,9 @@ export class ProjectsComponent implements OnInit {
   teamName: string = '';
   teamId: number = 0;
   teamProjects: ProjectDto[] = [];
-  companyId: string = '';
+  companyId: string | null = '';
+  userId: string | null = '';
+  user: any = {};
   showCreateForm: boolean = false;
   showEditForm: boolean = false;
   inputOne: string = 'Project Name';
@@ -22,9 +23,8 @@ export class ProjectsComponent implements OnInit {
   error: string = '';
   selectedProject: any;
   selectedTeam: any = {};
-  isAdmin: string | null = localStorage.getItem('isAdmin');
 
-  constructor(private router: Router, private dataService: DataService) {
+  constructor(private router: Router) {
     const input = this.router.getCurrentNavigation();
     const receivedTeamName = input?.extras?.state?.['teamName'];
     if (receivedTeamName) this.teamName = receivedTeamName;
@@ -35,16 +35,29 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCompanyId();
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      this.router.navigate(['/']);
+    }
+    this.getIdsFromUrl();
+    this.getFullUser();
   }
 
-  getCompanyId() {
+  getIdsFromUrl() {
     const url = location.href;
-    const match = url.match(/\/company\/(\d+)\//);
+    const userMatch = url.match(/\/user\/(\d+)\//);
+    const companyMatch = url.match(/\/company\/(\d+)\//);
 
-    if (match) {
-      this.companyId = match[1];
+    if (userMatch && companyMatch) {
+      this.userId = userMatch[1];
+      this.companyId = companyMatch[1];
     }
+  }
+
+  async getFullUser() {
+    const request = await axios.get(
+      `http://localhost:8080/users/${this.userId}`
+    );
+    this.user = request.data;
   }
 
   async getProjects() {
@@ -131,6 +144,8 @@ export class ProjectsComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigateByUrl(`/company/${this.companyId}/teams`);
+    this.router.navigateByUrl(
+      `/user/${this.userId}/company/${this.companyId}/teams`
+    );
   }
 }

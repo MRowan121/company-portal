@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
-import { DataService } from '../data.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,10 +10,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   error: string = '';
-  //
   loginForm: FormGroup;
 
-  constructor(private router: Router, private dataService: DataService) {
+  constructor(private router: Router) {
     this.loginForm = new FormGroup({
       username: new FormControl(''),
       password: new FormControl(''),
@@ -35,18 +33,13 @@ export class LoginComponent implements OnInit {
         'http://localhost:8080/users/login',
         credentials
       );
-      console.log(request.data);
-      this.dataService.setUser(request.data);
-      this.dataService.setIsAdmin(request.data.admin);
-      localStorage.setItem('isAdmin', request.data.admin.toString());
-
-      this.dataService.setIsLoggedIn(true);
+      localStorage.setItem('isLoggedIn', 'true');
 
       if (request.data.admin) {
-        this.router.navigate(['/company']);
+        this.router.navigate([`user/${request.data.id}/company`]);
       } else {
         this.router.navigate([
-          `company/${request.data.companies[0].id}/announcement`,
+          `user/${request.data.id}/company/${request.data.companies[0].id}/announcements`,
         ]);
       }
     } catch (err) {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import axios from 'axios';
 
 interface User {
@@ -20,8 +21,11 @@ export class UserRegistryComponent implements OnInit {
   error: string = '';
   companyId: string | null = '';
 
-  constructor() {}
+  constructor(private router: Router) {}
   ngOnInit() {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      this.router.navigate(['/']);
+    }
     this.getCompanyUsers();
   }
 

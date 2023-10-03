@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import axios from 'axios';
-import { DataService } from '../data.service';
 import { ProjectDto, TeamDto } from '../interfaces';
 
 @Component({
@@ -13,21 +12,36 @@ export class TeamsComponent implements OnInit {
   teams: TeamDto[] = [];
   teamProjects: { [teamId: number]: ProjectDto[] | undefined } = {};
   companyId: string | null = '';
-  isAdmin: string | null = '';
+  userId: string | null = '';
   showCreateForm: boolean = false;
   showTeamForm: boolean = false;
   error: string = '';
   users: any[] = [];
+  user: any = {};
 
   inputOne: string = 'Team Name';
   inputTwo: string = 'Description';
 
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(private router: Router) {}
   ngOnInit() {
-    this.isAdmin = localStorage.getItem('isAdmin');
-    this.companyId = localStorage.getItem('selectedCompanyId');
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      this.router.navigate(['/']);
+    }
+    this.getIdsFromUrl();
+    this.getFullUser();
     this.getTeams();
     this.getCompanyUsers();
+  }
+
+  getIdsFromUrl() {
+    const url = location.href;
+    const userMatch = url.match(/\/user\/(\d+)\//);
+    const companyMatch = url.match(/\/company\/(\d+)\//);
+
+    if (userMatch && companyMatch) {
+      this.userId = userMatch[1];
+      this.companyId = companyMatch[1];
+    }
   }
 
   async getTeams() {
@@ -44,12 +58,18 @@ export class TeamsComponent implements OnInit {
     this.filterCompanyTeams();
   }
 
+  async getFullUser() {
+    const request = await axios.get(
+      `http://localhost:8080/users/${this.userId}`
+    );
+    this.user = request.data;
+  }
+
   filterCompanyTeams() {
-    const currentUser = this.dataService.getUser();
-    if (this.isAdmin === 'false') {
+    if (!this.user.admin) {
       this.teams = this.teams.filter((team: any) => {
         return team.teammates.some(
-          (profile: any) => profile.id === currentUser.id
+          (profile: any) => profile.id === this.user.id
         );
       });
     }
@@ -63,9 +83,8 @@ export class TeamsComponent implements OnInit {
   }
 
   async getCompanyUsers() {
-    const companyId = this.dataService.getCompany();
     const request = await axios.get(
-      `http://localhost:8080/company/${companyId}/users`
+      `http://localhost:8080/company/${this.companyId}/users`
     );
     for (const user of request.data) this.users.push(user);
   }
@@ -78,7 +97,7 @@ export class TeamsComponent implements OnInit {
         teamId: team.id,
       },
     };
-    const url = `/company/${this.companyId}/teams/${team.id}/projects`;
+    const url = `/user/${this.userId}/company/${this.companyId}/teams/${team.id}/projects`;
 
     this.router.navigate([url], navigationExtras);
   }

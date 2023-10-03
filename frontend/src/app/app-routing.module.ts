@@ -9,18 +9,18 @@ import { CompanyComponent } from './company/company.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'company', component: CompanyComponent },
+  { path: 'user/:userId/company', component: CompanyComponent },
   {
-    path: 'company/:companyId/announcement',
+    path: 'user/:userId/company/:companyId/announcements',
     component: AnnouncementsComponent,
   },
-  { path: 'company/:companyId/teams', component: TeamsComponent },
+  { path: 'user/:userId/company/:companyId/teams', component: TeamsComponent },
   {
-    path: 'company/:companyId/teams/:teamId/projects',
+    path: 'user/:userId/company/:companyId/teams/:teamId/projects',
     component: ProjectsComponent,
   },
   {
-    path: 'company/:companyId/user-registry',
+    path: 'user/:userId/company/:companyId/user-registry',
     component: UserRegistryComponent,
   },
 ];
