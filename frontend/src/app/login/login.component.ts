@@ -21,25 +21,21 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   async validateUser() {
-    const username = this.loginForm.get('username')?.value;
-    const password = this.loginForm.get('password')?.value;
-
-    const credentials = {
-      username: username,
-      password: password,
-    };
     try {
-      const request = await axios.post(
-        'http://localhost:8080/users/login',
-        credentials
-      );
-      localStorage.setItem('isLoggedIn', 'true');
+      const { username, password } = this.loginForm.value;
 
-      if (request.data.admin) {
-        this.router.navigate([`user/${request.data.id}/company`]);
+      const response = await axios.post('http://localhost:8080/users/login', {
+        username,
+        password,
+      });
+      localStorage.setItem('isLoggedIn', 'true');
+      const { id, admin, companies } = response.data;
+
+      if (admin) {
+        this.router.navigate([`user/${id}/company`]);
       } else {
         this.router.navigate([
-          `user/${request.data.id}/company/${request.data.companies[0].id}/announcements`,
+          `user/${id}/company/${companies[0].id}/announcements`,
         ]);
       }
     } catch (err) {
