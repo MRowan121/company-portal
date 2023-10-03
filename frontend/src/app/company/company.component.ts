@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CompanyDto } from '../interfaces';
 import axios from 'axios';
+import { getUserIdFromUrl } from '../utility-functions';
 
 @Component({
   selector: 'app-company',
@@ -15,17 +16,8 @@ export class CompanyComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.getUserId();
+    this.userId = getUserIdFromUrl();
     this.getCompanies();
-  }
-
-  getUserId() {
-    const url = location.href;
-    const match = url.match(/\/user\/(\d+)\//);
-
-    if (match) {
-      this.userId = match[1];
-    }
   }
 
   async getCompanies() {

@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { ProjectDto } from '../interfaces';
-import { getFullUser } from '../http-requests';
+import {
+  getCompanyIdFromUrl,
+  getFullUser,
+  getUserIdFromUrl,
+} from '../utility-functions';
 
 @Component({
   selector: 'app-projects',
@@ -38,19 +42,9 @@ export class ProjectsComponent implements OnInit {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
       this.router.navigate(['/']);
     }
-    this.getIdsFromUrl();
+    this.userId = getUserIdFromUrl();
+    this.companyId = getCompanyIdFromUrl();
     this.user = await getFullUser(this.userId);
-  }
-
-  getIdsFromUrl() {
-    const url = location.href;
-    const userMatch = url.match(/\/user\/(\d+)\//);
-    const companyMatch = url.match(/\/company\/(\d+)\//);
-
-    if (userMatch && companyMatch) {
-      this.userId = userMatch[1];
-      this.companyId = companyMatch[1];
-    }
   }
 
   async getProjects() {

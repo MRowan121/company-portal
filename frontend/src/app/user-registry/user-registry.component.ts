@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
+import { getCompanyIdFromUrl } from '../utility-functions';
 
 interface User {
   name: string;
@@ -26,11 +27,11 @@ export class UserRegistryComponent implements OnInit {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
       this.router.navigate(['/']);
     }
+    this.companyId = getCompanyIdFromUrl();
     this.getCompanyUsers();
   }
 
   async getCompanyUsers() {
-    this.companyId = localStorage.getItem('selectedCompanyId');
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/users`
     );

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
-import { getFullUser } from 'src/app/http-requests';
+import {
+  getCompanyIdFromUrl,
+  getFullUser,
+  getUserIdFromUrl,
+} from 'src/app/utility-functions';
 
 @Component({
   selector: 'app-nav-bar',
@@ -16,20 +20,10 @@ export class NavBarComponent implements OnInit {
   constructor() {}
 
   async ngOnInit() {
-    this.getIdsFromUrl();
+    this.userId = getUserIdFromUrl();
+    this.companyId = getCompanyIdFromUrl();
     this.user = await getFullUser(this.userId);
     this.userName = `${this.user.profile.firstName} ${this.user.profile.lastName[0]}.`;
-  }
-
-  getIdsFromUrl() {
-    const url = location.href;
-    const userMatch = url.match(/\/user\/(\d+)\//);
-    const companyMatch = url.match(/\/company\/(\d+)\//);
-
-    if (userMatch && companyMatch) {
-      this.userId = userMatch[1];
-      this.companyId = companyMatch[1];
-    }
   }
 
   logOut() {
