@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import axios from 'axios';
 import { ProjectDto, TeamDto } from '../interfaces';
+import { getFullUser } from '../http-requests';
 
 @Component({
   selector: 'app-teams',
@@ -23,12 +24,12 @@ export class TeamsComponent implements OnInit {
   inputTwo: string = 'Description';
 
   constructor(private router: Router) {}
-  ngOnInit() {
+  async ngOnInit() {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
       this.router.navigate(['/']);
     }
     this.getIdsFromUrl();
-    this.getFullUser();
+    this.user = await getFullUser(this.userId);
     this.getTeams();
     this.getCompanyUsers();
   }
@@ -56,13 +57,6 @@ export class TeamsComponent implements OnInit {
       this.teamProjects[team.id] = numOfProjects;
     }
     this.filterCompanyTeams();
-  }
-
-  async getFullUser() {
-    const request = await axios.get(
-      `http://localhost:8080/users/${this.userId}`
-    );
-    this.user = request.data;
   }
 
   filterCompanyTeams() {

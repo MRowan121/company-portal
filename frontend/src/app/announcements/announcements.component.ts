@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AnnouncementDto } from '../interfaces';
 import { from } from 'rxjs';
 import { Router } from '@angular/router';
+import { getFullUser } from '../http-requests';
 
 @Component({
   selector: 'app-announcements',
@@ -23,12 +24,12 @@ export class AnnouncementsComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
       this.router.navigate(['/']);
     }
     this.getIdsFromUrl();
-    this.getFullUser();
+    this.user = await getFullUser(this.userId);
     this.getAnnouncements();
   }
 
@@ -41,13 +42,6 @@ export class AnnouncementsComponent implements OnInit {
       this.userId = userMatch[1];
       this.companyId = companyMatch[1];
     }
-  }
-
-  async getFullUser() {
-    const request = await axios.get(
-      `http://localhost:8080/users/${this.userId}`
-    );
-    this.user = request.data;
   }
 
   async getAnnouncements() {

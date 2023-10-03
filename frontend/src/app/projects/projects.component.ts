@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { ProjectDto } from '../interfaces';
+import { getFullUser } from '../http-requests';
 
 @Component({
   selector: 'app-projects',
@@ -9,7 +10,6 @@ import { ProjectDto } from '../interfaces';
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  // projects: any[] = [];
   teamName: string = '';
   teamId: number = 0;
   teamProjects: ProjectDto[] = [];
@@ -34,12 +34,12 @@ export class ProjectsComponent implements OnInit {
     if (receivedTeamProjects) this.teamProjects = receivedTeamProjects;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
       this.router.navigate(['/']);
     }
     this.getIdsFromUrl();
-    this.getFullUser();
+    this.user = await getFullUser(this.userId);
   }
 
   getIdsFromUrl() {
@@ -51,13 +51,6 @@ export class ProjectsComponent implements OnInit {
       this.userId = userMatch[1];
       this.companyId = companyMatch[1];
     }
-  }
-
-  async getFullUser() {
-    const request = await axios.get(
-      `http://localhost:8080/users/${this.userId}`
-    );
-    this.user = request.data;
   }
 
   async getProjects() {
