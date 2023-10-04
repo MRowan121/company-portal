@@ -1,19 +1,18 @@
 package com.cooksys.groupfinal.mappers;
 
-import java.util.Set;
-
-import org.mapstruct.Mapper;
-
 import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.entities.Project;
+import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = { TeamMapper.class })
+import java.util.Set;
+
+@Mapper(componentModel = "spring", uses = {TeamMapper.class})
 public interface ProjectMapper {
-	
-	ProjectDto entityToDto(Project project);
+
+    ProjectDto entityToDto(Project project);
 
     Set<ProjectDto> entitiesToDtos(Set<Project> projects);
-    
+
     Set<Project> dtosToEntities(Set<ProjectDto> projectDtos);
 
 

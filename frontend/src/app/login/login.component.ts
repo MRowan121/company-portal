@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
-import { DataService } from '../data.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,65 +9,37 @@ import { DataService } from '../data.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  username: string = '';
-  password: string = '';
-  user: any;
-  isAdmin: boolean = false;
-  isLoggedIn: boolean = false;
   error: string = '';
+  loginForm: FormGroup;
 
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(private router: Router) {
+    this.loginForm = new FormGroup({
+      username: new FormControl(''),
+      password: new FormControl(''),
+    });
+  }
   ngOnInit() {}
 
-  getUsername(value: string) {
-    this.username = value;
-  }
-
-  getPassword(value: string) {
-    this.password = value;
-  }
-
-  async validateUser(e: any) {
-    e.preventDefault();
-    this.error = '';
-    if (this.username === '') {
-      this.error = 'Username Empty';
-      return;
-    }
-    if (this.password === '') {
-      this.error = 'Password Empty';
-      return;
-    }
-
-    const userToSubmit = {
-      username: this.username,
-      password: this.password,
-    };
+  async validateUser() {
     try {
-      const request = await axios.post(
-        'http://localhost:8080/users/login',
-        userToSubmit
-      );
+      const { username, password } = this.loginForm.value;
 
-      this.user = request.data;
-      this.isAdmin = request.data.admin;
-      this.dataService.setUser(this.user);
-      this.dataService.setCompany(this.user.companies[0].id);
-      this.dataService.setIsAdmin(this.isAdmin);
-      localStorage.setItem('isAdmin', this.isAdmin.toString());
+      const response = await axios.post('http://localhost:8080/users/login', {
+        username,
+        password,
+      });
+      localStorage.setItem('isLoggedIn', 'true');
+      const { id, admin, companies } = response.data;
 
-      this.isLoggedIn = true;
-      this.dataService.setIsLoggedIn(this.isLoggedIn);
-
-      if (this.isAdmin) {
-        this.router.navigate(['/select-company']);
+      if (admin) {
+        this.router.navigate([`user/${id}/company`]);
+      } else {
+        this.router.navigate([
+          `user/${id}/company/${companies[0].id}/announcements`,
+        ]);
       }
-      if (!this.isAdmin) {
-        this.router.navigate(['/announcements']);
-      }
-
     } catch (err) {
-      this.error = 'Login Error';
+      this.error = 'Invalid credentials. Please try again.';
       console.log(err);
     }
   }

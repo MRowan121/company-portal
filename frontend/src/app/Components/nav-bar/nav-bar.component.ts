@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../data.service';
+import axios from 'axios';
+import {
+  getCompanyIdFromUrl,
+  getFullUser,
+  getUserIdFromUrl,
+} from 'src/app/utility-functions';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,19 +12,21 @@ import { DataService } from '../../data.service';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  isAdmin: string | null = localStorage.getItem('isAdmin');
-  userName: string = '';
+  companyId: string | null = '';
   user: any = {};
+  userId: string | null = '';
+  userName: string = '';
 
-  constructor(private dataService: DataService) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.user = this.dataService.getUser();
+  async ngOnInit() {
+    this.userId = getUserIdFromUrl();
+    this.companyId = getCompanyIdFromUrl();
+    this.user = await getFullUser(this.userId);
     this.userName = `${this.user.profile.firstName} ${this.user.profile.lastName[0]}.`;
   }
 
   logOut() {
     localStorage.setItem('isLoggedIn', 'false');
-    localStorage.setItem('isAdmin', 'false');
   }
 }

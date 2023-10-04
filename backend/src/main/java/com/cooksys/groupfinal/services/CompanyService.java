@@ -1,43 +1,35 @@
 package com.cooksys.groupfinal.services;
 
-import java.util.Set;
-
-
 import com.cooksys.groupfinal.dtos.*;
-import com.cooksys.groupfinal.repositories.AnnouncementRepository;
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
-import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.entities.Company;
-import com.cooksys.groupfinal.entities.Team;
 
-import com.cooksys.groupfinal.entities.User;
+import java.util.Set;
 
 
 public interface CompanyService {
 
-	Set<FullUserDto> getAllUsers(Long id);
+    Set<FullUserDto> getAllUsers(Long id);
 
-	Set<AnnouncementDto> getAllAnnouncements(Long id);
+    Set<AnnouncementDto> getAllAnnouncements(Long id);
 
-	Set<TeamDto> getAllTeams(Long id);
+    Set<TeamDto> getAllTeams(Long id);
 
-	Set<ProjectDto> getAllProjects(Long companyId, Long teamId);
-
-
-	AnnouncementDto createAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto);
-	Set<Company>  getAllCompanies();
+    Set<ProjectDto> getAllProjects(Long companyId, Long teamId);
 
 
-	FullUserDto createUser(UserRequestDto userRequestDto, Long id);
+    AnnouncementDto createAnnouncement(Long id, AnnouncementDto announcementDto);
 
-	ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto);
-	ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto);
+    Set<Company> getAllCompanies();
 
 
-	TeamDto createTeams(Long id, TeamDto teamDto);
+    FullUserDto createUser(UserRequestDto userRequestDto, Long id);
+
+    ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto);
+
+    ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto);
+
+
+    TeamDto createTeams(Long id, TeamDto teamDto);
 
 
 }

@@ -18,8 +18,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of users">
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
+            <td>{{ user.profile.firstName }} {{ user.profile.lastName }}</td>
+            <td>{{ user.profile.email }}</td>
             <td *ngIf="user.admin" class="true">YES</td>
             <td *ngIf="!user.admin" class="false">NO</td>
             <td *ngIf="user.active" class="true">YES</td>

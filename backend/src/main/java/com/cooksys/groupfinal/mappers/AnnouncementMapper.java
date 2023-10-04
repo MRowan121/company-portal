@@ -1,25 +1,18 @@
 package com.cooksys.groupfinal.mappers;
 
-import java.util.Set;
-
-import com.cooksys.groupfinal.dtos.AnnouncementRequestDto;
-import com.cooksys.groupfinal.dtos.BasicUserDto;
-import com.cooksys.groupfinal.entities.User;
-import org.mapstruct.Mapper;
-
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.entities.Announcement;
+import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = { BasicUserMapper.class })
+import java.util.Set;
+
+@Mapper(componentModel = "spring", uses = {BasicUserMapper.class})
 public interface AnnouncementMapper {
-	
-	AnnouncementDto entityToDto(Announcement announcement);
 
+    AnnouncementDto entityToDto(Announcement announcement);
 
-  Set<AnnouncementDto> entitiesToDtos(Set<Announcement> announcement);
-  
+    Set<AnnouncementDto> entitiesToDtos(Set<Announcement> announcement);
 
-    Announcement requestDtoToEntity(AnnouncementRequestDto announcementRequestDto);
+    Announcement dtoToEntity(AnnouncementDto announcementDto);
 
-    
 }

@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
-import { DataService } from '../data.service';
-import { AnnouncementDTO } from '../interfaces';
+import { AnnouncementDto } from '../interfaces';
 import { from } from 'rxjs';
-
-interface Announcement {
-  firstName: string;
-  lastName: string;
-  message: string;
-  date: string;
-}
+import { Router } from '@angular/router';
+import {
+  getCompanyIdFromUrl,
+  getFullUser,
+  getUserIdFromUrl,
+} from '../utility-functions';
 
 @Component({
   selector: 'app-announcements',
@@ -17,17 +15,23 @@ interface Announcement {
   styleUrls: ['./announcements.component.css'],
 })
 export class AnnouncementsComponent implements OnInit {
-  companyId: string = this.dataService.getCompany().toString();
-  announcements: Announcement[] = [];
-  user: any = {};
-  isAdmin: string | null = localStorage.getItem('isAdmin');
-  showForm: boolean = false;
+  announcements: AnnouncementDto[] = [];
+  companyId: string | null = '';
   error: string = '';
-  inputOne: string = 'Title';
-  inputTwo: string = 'Message';
-  constructor(private dataService: DataService) {}
+  isLoggedIn: boolean = false;
+  showForm: boolean = false;
+  user: any = {};
+  userId: string | null = '';
 
-  ngOnInit() {
+  constructor(private router: Router) {}
+
+  async ngOnInit() {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      this.router.navigate(['/']);
+    }
+    this.userId = getUserIdFromUrl();
+    this.companyId = getCompanyIdFromUrl();
+    this.user = await getFullUser(this.userId);
     this.getAnnouncements();
   }
 
@@ -37,30 +41,29 @@ export class AnnouncementsComponent implements OnInit {
 
     observable.subscribe({
       next: (response) => {
-        const data = response.data;
-        this.announcements = data
-          .map((obj: AnnouncementDTO) => {
-            return {
-              firstName: obj.author.profile.firstName,
-              lastName: obj.author.profile.lastName,
-              message: obj.message,
-              date: new Date(obj.date),
-            };
-          })
-          .sort((a: any, b: any) => b.date - a.date);
+        this.announcements = response.data.sort(
+          (a: any, b: any) => b.date - a.date
+        );
       },
     });
   }
 
-  async onAnnouncementSubmission(formData: any) {
-    const newMessage = {
-      title: formData.Title,
-      message: formData.Message,
+  async onSubmit(formData: any) {
+    const newAnnouncement = {
+      title: formData.name,
+      message: formData.description,
+      author: {
+        id: this.user.id,
+        profile: this.user.profile,
+        admin: this.user.admin,
+        active: this.user.active,
+        status: this.user.status,
+      },
     };
     try {
       await axios.post(
         `http://localhost:8080/company/${this.companyId}/announcements`,
-        newMessage
+        newAnnouncement
       );
     } catch (err) {
       this.error = 'Login Error';

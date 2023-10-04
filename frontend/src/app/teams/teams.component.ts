@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import axios from 'axios';
-import { DataService } from '../data.service';
-
-interface Team {
-  teamId: number;
-  name: string;
-  projects: any[];
-  memberProfiles: string[];
-  memberNames: string[];
-}
+import { FullUserDto, ProjectDto, TeamDto } from '../interfaces';
+import {
+  getCompanyIdFromUrl,
+  getCompanyUsers,
+  getFullUser,
+  getTeamProjects,
+  getUserIdFromUrl,
+} from '../utility-functions';
 
 @Component({
   selector: 'app-teams',
@@ -17,99 +16,68 @@ interface Team {
   styleUrls: ['./teams.component.css'],
 })
 export class TeamsComponent implements OnInit {
-  teams: Team[] = [];
-  isHidden: boolean = true;
-  users: any[] = [];
-  companyId: string = this.dataService.getCompany().toString();
-  isAdmin: string | null = localStorage.getItem('isAdmin');
+  companyId: string | null = '';
+  companyUsers: any[] = [];
+  error: string = '';
   showCreateForm: boolean = false;
   showTeamForm: boolean = false;
-  inputOne: string = 'Team Name';
-  inputTwo: string = 'Description';
-  error: string = '';
-  newTeam: any[] = [];
+  teams: TeamDto[] = [];
+  teamProjects: { [teamId: number]: ProjectDto[] | undefined } = {};
+  user: FullUserDto = {} as FullUserDto;
+  userId: string | null = '';
 
-  constructor(private router: Router, private dataService: DataService) {}
-  ngOnInit() {
+  constructor(private router: Router) {}
+  async ngOnInit() {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      this.router.navigate(['/']);
+    }
+    this.userId = getUserIdFromUrl();
+    this.companyId = getCompanyIdFromUrl();
+    this.user = await getFullUser(this.userId);
     this.getTeams();
-    this.getCompanyUsers();
+    this.companyUsers = await getCompanyUsers(this.companyId);
   }
 
   async getTeams() {
     const request = await axios.get(
       `http://localhost:8080/company/${this.companyId}/teams`
     );
-    this.teams = request.data
-      .map((obj: any) => {
-        return {
-          teamId: obj.id,
-          name: obj.name,
-          projects: [],
-          memberProfiles: obj.teammates,
-          memberNames: [],
-        };
-      })
-      .sort((a: any, b: any) => a.teamId - b.teamId);
+    this.teams = request.data.sort((a: any, b: any) => a.id - b.id);
+
     this.filterCompanyTeams();
 
-    this.getMemberNames();
-    this.getProjects(this.companyId);
+    // Populate the projectCounts for each team
+    for (const team of this.teams) {
+      const numOfProjects = await getTeamProjects(this.companyId, team.id);
+      this.teamProjects[team.id] = numOfProjects;
+    }
   }
 
   filterCompanyTeams() {
-    const currentUser = this.dataService.getUser();
-
-    if (this.isAdmin === 'false') {
+    if (!this.user.admin) {
       this.teams = this.teams.filter((team: any) => {
-        return team.memberProfiles.some(
-          (profile: any) => profile.id === currentUser.id
+        return team.teammates.some(
+          (profile: any) => profile.id === this.user.id
         );
       });
     }
   }
 
-  getMemberNames() {
-    this.teams.forEach((team: Team) =>
-      team.memberProfiles.forEach((member: any) => {
-        team.memberNames.push(
-          `${member.profile.firstName} ${member.profile.lastName[0]}.`
-        );
-      })
-    );
-  }
-
-  async getProjects(companyId: any) {
-    this.teams.forEach(async (team: Team) => {
-      const request = await axios.get(
-        `http://localhost:8080/company/${companyId}/teams/${team.teamId}/projects`
-      );
-      team.projects = request.data;
-    });
-  }
-
-  async getCompanyUsers() {
-    const companyId = this.dataService.getCompany();
-    const request = await axios.get(
-      `http://localhost:8080/company/${companyId}/users`
-    );
-    for (const user of request.data) this.users.push(user);
-    console.log(this.users);
-  }
-
-  openProjects(team: Team) {
+  openProjects(team: TeamDto) {
     const navigationExtras: NavigationExtras = {
       state: {
-        teamName: team.name,
-        teamId: team.teamId,
+        team: team,
       },
     };
-    this.router.navigate(['/teams/projects'], navigationExtras);
+    const url = `/user/${this.userId}/company/${this.companyId}/teams/${team.id}/projects`;
+
+    this.router.navigate([url], navigationExtras);
   }
 
   async onCreation(formData: any) {
     const newTeam = {
-      name: formData['Team Name'],
-      description: formData['Description'],
+      name: formData.name,
+      description: formData.description,
       teammates: formData.members,
     };
     try {

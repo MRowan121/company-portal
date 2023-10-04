@@ -10,14 +10,17 @@ export class CreateModalComponent implements OnInit {
 
   @Input() inputOne: string = '';
   @Input() inputTwo: string = '';
-  @Input() users: any[] = [];
-  @Input() showTeamForm: boolean = false;
+  @Input() projectData: any;
   @Input() showEditForm: boolean = false;
+  @Input() showTeamForm: boolean = false;
+  @Input() users: any[] = [];
   @Output() hideOverlay = new EventEmitter<any>();
   @Output() formSubmitted = new EventEmitter<any>();
 
   constructor() {}
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadProjectData();
+  }
 
   onSubmit() {
     this.formSubmitted.emit(this.formData);
@@ -25,5 +28,13 @@ export class CreateModalComponent implements OnInit {
 
   closeOverlay() {
     this.hideOverlay.emit();
+  }
+
+  loadProjectData() {
+    if (this.projectData) {
+      this.formData.name = this.projectData.name;
+      this.formData.description = this.projectData.description;
+      this.formData.active = this.projectData.active;
+    }
   }
 }

@@ -1,17 +1,16 @@
 package com.cooksys.groupfinal.controllers.advice;
 
+import com.cooksys.groupfinal.dtos.ErrorDto;
+import com.cooksys.groupfinal.exceptions.BadRequestException;
+import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
+import com.cooksys.groupfinal.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.cooksys.groupfinal.dtos.ErrorDto;
-import com.cooksys.groupfinal.exceptions.BadRequestException;
-import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
-import com.cooksys.groupfinal.exceptions.NotFoundException;
-
-@ControllerAdvice(basePackages = { "com.cooksys.groupfinal.controllers" })
+@ControllerAdvice(basePackages = {"com.cooksys.groupfinal.controllers"})
 @ResponseBody
 public class GroupFinalControllerAdvice {
 
