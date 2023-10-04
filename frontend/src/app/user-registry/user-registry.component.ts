@@ -1,15 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
-import { getCompanyIdFromUrl } from '../utility-functions';
-
-interface User {
-  name: string;
-  email: string;
-  active: boolean;
-  admin: boolean;
-  status: string;
-}
+import { getCompanyIdFromUrl, getCompanyUsers } from '../utility-functions';
+import { FullUserDto } from '../interfaces';
 
 @Component({
   selector: 'app-user-registry',
@@ -17,33 +10,18 @@ interface User {
   styleUrls: ['./user-registry.component.css'],
 })
 export class UserRegistryComponent implements OnInit {
-  users: User[] = [];
+  users: FullUserDto[] = [];
   showForm: boolean = false;
   error: string = '';
   companyId: string | null = '';
 
   constructor(private router: Router) {}
-  ngOnInit() {
+  async ngOnInit() {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
       this.router.navigate(['/']);
     }
     this.companyId = getCompanyIdFromUrl();
-    this.getCompanyUsers();
-  }
-
-  async getCompanyUsers() {
-    const request = await axios.get(
-      `http://localhost:8080/company/${this.companyId}/users`
-    );
-    this.users = request.data.map((obj: any) => {
-      return {
-        name: `${obj.profile.firstName} ${obj.profile.lastName}`,
-        email: obj.profile.email,
-        active: obj.active,
-        admin: obj.admin,
-        status: obj.status,
-      };
-    });
+    this.users = await getCompanyUsers(this.companyId);
   }
 
   async onSubmission(formData: any) {
@@ -70,7 +48,7 @@ export class UserRegistryComponent implements OnInit {
       console.log(err);
     }
     this.closeOverlay();
-    this.getCompanyUsers();
+    this.users = await getCompanyUsers(this.companyId);
   }
 
   showOverlay() {

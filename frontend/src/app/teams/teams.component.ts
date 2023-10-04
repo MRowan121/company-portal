@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import axios from 'axios';
-import { ProjectDto, TeamDto } from '../interfaces';
+import { FullUserDto, ProjectDto, TeamDto } from '../interfaces';
 import {
   getCompanyIdFromUrl,
+  getCompanyUsers,
   getFullUser,
   getUserIdFromUrl,
 } from '../utility-functions';
@@ -22,7 +23,7 @@ export class TeamsComponent implements OnInit {
   showTeamForm: boolean = false;
   error: string = '';
   users: any[] = [];
-  user: any = {};
+  user: FullUserDto = {} as FullUserDto;
 
   inputOne: string = 'Team Name';
   inputTwo: string = 'Description';
@@ -36,7 +37,7 @@ export class TeamsComponent implements OnInit {
     this.companyId = getCompanyIdFromUrl();
     this.user = await getFullUser(this.userId);
     this.getTeams();
-    this.getCompanyUsers();
+    this.users = await getCompanyUsers(this.companyId);
   }
 
   async getTeams() {
@@ -68,13 +69,6 @@ export class TeamsComponent implements OnInit {
       `http://localhost:8080/company/${this.companyId}/teams/${teamId}/projects`
     );
     return request.data;
-  }
-
-  async getCompanyUsers() {
-    const request = await axios.get(
-      `http://localhost:8080/company/${this.companyId}/users`
-    );
-    for (const user of request.data) this.users.push(user);
   }
 
   openProjects(team: TeamDto) {
