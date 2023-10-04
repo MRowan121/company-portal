@@ -32,6 +32,13 @@ const getCompanyUsers = async (companyId: string | null) => {
   }
 };
 
+const getTeamProjects = async (companyId: string | null, teamId: number) => {
+  const request = await axios.get(
+    `http://localhost:8080/company/${companyId}/teams/${teamId}/projects`
+  );
+  return request.data;
+};
+
 // HELPER FUNCTIONS
 
 const getUserIdFromUrl = () => {
@@ -56,4 +63,10 @@ const getCompanyIdFromUrl = () => {
   }
 };
 
-export { getFullUser, getCompanyUsers, getUserIdFromUrl, getCompanyIdFromUrl };
+export {
+  getFullUser,
+  getCompanyUsers,
+  getTeamProjects,
+  getUserIdFromUrl,
+  getCompanyIdFromUrl,
+};

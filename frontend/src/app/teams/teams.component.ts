@@ -6,6 +6,7 @@ import {
   getCompanyIdFromUrl,
   getCompanyUsers,
   getFullUser,
+  getTeamProjects,
   getUserIdFromUrl,
 } from '../utility-functions';
 
@@ -48,7 +49,7 @@ export class TeamsComponent implements OnInit {
 
     // Populate the projectCounts for each team
     for (const team of this.teams) {
-      const numOfProjects = await this.getTeamProjects(team.id);
+      const numOfProjects = await getTeamProjects(this.companyId, team.id);
       this.teamProjects[team.id] = numOfProjects;
     }
     this.filterCompanyTeams();
@@ -64,19 +65,13 @@ export class TeamsComponent implements OnInit {
     }
   }
 
-  async getTeamProjects(teamId: number) {
-    const request = await axios.get(
-      `http://localhost:8080/company/${this.companyId}/teams/${teamId}/projects`
-    );
-    return request.data;
-  }
-
   openProjects(team: TeamDto) {
     const navigationExtras: NavigationExtras = {
       state: {
         teamProjects: this.teamProjects[team.id],
         teamName: team.name,
         teamId: team.id,
+        team: team,
       },
     };
     const url = `/user/${this.userId}/company/${this.companyId}/teams/${team.id}/projects`;

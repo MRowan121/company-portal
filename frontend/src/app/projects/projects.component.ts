@@ -5,6 +5,7 @@ import { ProjectDto } from '../interfaces';
 import {
   getCompanyIdFromUrl,
   getFullUser,
+  getTeamProjects,
   getUserIdFromUrl,
 } from '../utility-functions';
 
@@ -14,8 +15,7 @@ import {
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  teamName: string = '';
-  teamId: number = 0;
+  team: any = {};
   teamProjects: ProjectDto[] = [];
   companyId: string | null = '';
   userId: string | null = '';
@@ -26,16 +26,11 @@ export class ProjectsComponent implements OnInit {
   inputTwo: string = 'Description';
   error: string = '';
   selectedProject: any;
-  selectedTeam: any = {};
 
   constructor(private router: Router) {
     const input = this.router.getCurrentNavigation();
-    const receivedTeamName = input?.extras?.state?.['teamName'];
-    if (receivedTeamName) this.teamName = receivedTeamName;
-    const receivedTeamId = input?.extras?.state?.['teamId'];
-    if (receivedTeamId) this.teamId = receivedTeamId;
-    const receivedTeamProjects = input?.extras?.state?.['teamProjects'];
-    if (receivedTeamProjects) this.teamProjects = receivedTeamProjects;
+    const receivedTeam = input?.extras?.state?.['team'];
+    if (receivedTeam) this.team = receivedTeam;
   }
 
   async ngOnInit() {
@@ -45,13 +40,7 @@ export class ProjectsComponent implements OnInit {
     this.userId = getUserIdFromUrl();
     this.companyId = getCompanyIdFromUrl();
     this.user = await getFullUser(this.userId);
-  }
-
-  async getProjects() {
-    const request = await axios.get(
-      `http://localhost:8080/company/${this.companyId}/teams/${this.teamId}/projects`
-    );
-    this.teamProjects = request.data;
+    this.teamProjects = await getTeamProjects(this.companyId, this.team.id);
   }
 
   async onCreation(formData: any) {
@@ -61,7 +50,7 @@ export class ProjectsComponent implements OnInit {
     };
     try {
       await axios.post(
-        `http://localhost:8080/company/${this.companyId}/teams/${this.teamId}/projects`,
+        `http://localhost:8080/company/${this.companyId}/teams/${this.team.id}/projects`,
         newProject
       );
     } catch (err) {
@@ -69,11 +58,10 @@ export class ProjectsComponent implements OnInit {
       console.log(err);
     }
     this.closeOverlay();
-    this.getProjects();
+    this.teamProjects = await getTeamProjects(this.companyId, this.team.id);
   }
 
   async onEdit(formData: any) {
-    this.getCurrentTeam();
     const formDataValues = Object.values(formData);
     const updatedProject = {
       id: this.selectedProject.id,
@@ -84,7 +72,7 @@ export class ProjectsComponent implements OnInit {
     };
     try {
       await axios.patch(
-        `http://localhost:8080/company/${this.companyId}/teams/${this.teamId}/projects/${this.selectedProject.id}`,
+        `http://localhost:8080/company/${this.companyId}/teams/${this.team.id}/projects/${this.selectedProject.id}`,
         updatedProject
       );
     } catch (err) {
@@ -92,18 +80,9 @@ export class ProjectsComponent implements OnInit {
       console.log(err);
     }
     this.closeOverlay();
-    this.getProjects();
+    this.teamProjects = await getTeamProjects(this.companyId, this.team.id);
     this.inputOne = 'Project Name';
     this.inputTwo = 'Description';
-  }
-
-  async getCurrentTeam() {
-    const request = await axios.get(
-      `http://localhost:8080/company/${this.companyId}/teams`
-    );
-    this.selectedTeam = request.data.filter(
-      (obj: any) => obj.id === this.teamId
-    );
   }
 
   showCreateOverlay() {
