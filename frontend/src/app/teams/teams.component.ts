@@ -16,18 +16,15 @@ import {
   styleUrls: ['./teams.component.css'],
 })
 export class TeamsComponent implements OnInit {
-  teams: TeamDto[] = [];
-  teamProjects: { [teamId: number]: ProjectDto[] | undefined } = {};
   companyId: string | null = '';
-  userId: string | null = '';
+  companyUsers: any[] = [];
+  error: string = '';
   showCreateForm: boolean = false;
   showTeamForm: boolean = false;
-  error: string = '';
-  users: any[] = [];
+  teams: TeamDto[] = [];
+  teamProjects: { [teamId: number]: ProjectDto[] | undefined } = {};
   user: FullUserDto = {} as FullUserDto;
-
-  inputOne: string = 'Team Name';
-  inputTwo: string = 'Description';
+  userId: string | null = '';
 
   constructor(private router: Router) {}
   async ngOnInit() {
@@ -38,7 +35,7 @@ export class TeamsComponent implements OnInit {
     this.companyId = getCompanyIdFromUrl();
     this.user = await getFullUser(this.userId);
     this.getTeams();
-    this.users = await getCompanyUsers(this.companyId);
+    this.companyUsers = await getCompanyUsers(this.companyId);
   }
 
   async getTeams() {
@@ -47,12 +44,13 @@ export class TeamsComponent implements OnInit {
     );
     this.teams = request.data.sort((a: any, b: any) => a.id - b.id);
 
+    this.filterCompanyTeams();
+
     // Populate the projectCounts for each team
     for (const team of this.teams) {
       const numOfProjects = await getTeamProjects(this.companyId, team.id);
       this.teamProjects[team.id] = numOfProjects;
     }
-    this.filterCompanyTeams();
   }
 
   filterCompanyTeams() {
@@ -68,9 +66,6 @@ export class TeamsComponent implements OnInit {
   openProjects(team: TeamDto) {
     const navigationExtras: NavigationExtras = {
       state: {
-        teamProjects: this.teamProjects[team.id],
-        teamName: team.name,
-        teamId: team.id,
         team: team,
       },
     };
@@ -81,8 +76,8 @@ export class TeamsComponent implements OnInit {
 
   async onCreation(formData: any) {
     const newTeam = {
-      name: formData['Team Name'],
-      description: formData['Description'],
+      name: formData.name,
+      description: formData.description,
       teammates: formData.members,
     };
     try {

@@ -10,10 +10,10 @@ import { FullUserDto } from '../interfaces';
   styleUrls: ['./user-registry.component.css'],
 })
 export class UserRegistryComponent implements OnInit {
-  users: FullUserDto[] = [];
-  showForm: boolean = false;
-  error: string = '';
   companyId: string | null = '';
+  error: string = '';
+  showForm: boolean = false;
+  users: FullUserDto[] = [];
 
   constructor(private router: Router) {}
   async ngOnInit() {

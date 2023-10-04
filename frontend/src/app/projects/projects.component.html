@@ -27,9 +27,10 @@
     </div>
   </div>
   <app-create-modal
-    [inputOne]="inputOne"
-    [inputTwo]="inputTwo"
+    [inputOne]="'Project Name'"
+    [inputTwo]="'Description'"
     [showEditForm]="showEditForm"
+    [projectData]="selectedProject"
     *ngIf="showCreateForm || showEditForm"
     (hideOverlay)="showOverlay()"
     (formSubmitted)="!showEditForm ? onCreation($event) : onEdit($event)"

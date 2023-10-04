@@ -15,17 +15,15 @@ import {
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  team: any = {};
-  teamProjects: ProjectDto[] = [];
   companyId: string | null = '';
-  userId: string | null = '';
-  user: any = {};
-  showCreateForm: boolean = false;
-  showEditForm: boolean = false;
-  inputOne: string = 'Project Name';
-  inputTwo: string = 'Description';
   error: string = '';
   selectedProject: any;
+  showCreateForm: boolean = false;
+  showEditForm: boolean = false;
+  team: any = {};
+  teamProjects: ProjectDto[] = [];
+  user: any = {};
+  userId: string | null = '';
 
   constructor(private router: Router) {
     const input = this.router.getCurrentNavigation();
@@ -45,8 +43,8 @@ export class ProjectsComponent implements OnInit {
 
   async onCreation(formData: any) {
     const newProject = {
-      name: formData['Project Name'],
-      description: formData['Description'],
+      name: formData.name,
+      description: formData.description,
     };
     try {
       await axios.post(
@@ -81,8 +79,6 @@ export class ProjectsComponent implements OnInit {
     }
     this.closeOverlay();
     this.teamProjects = await getTeamProjects(this.companyId, this.team.id);
-    this.inputOne = 'Project Name';
-    this.inputTwo = 'Description';
   }
 
   showCreateOverlay() {
@@ -92,8 +88,6 @@ export class ProjectsComponent implements OnInit {
   showEditOverlay(project: any) {
     this.showEditForm = !this.showEditForm;
     this.selectedProject = project;
-    this.inputOne = project.name;
-    this.inputTwo = project.description;
   }
 
   showOverlay() {

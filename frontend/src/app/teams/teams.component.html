@@ -25,10 +25,10 @@
     </div>
   </div>
   <app-create-modal
-    [inputOne]="inputOne"
-    [inputTwo]="inputTwo"
+    [inputOne]="'Team Name'"
+    [inputTwo]="'Description'"
     [showTeamForm]="showTeamForm"
-    [users]="users"
+    [users]="companyUsers"
     *ngIf="showCreateForm"
     (hideOverlay)="showOverlay()"
     (formSubmitted)="onCreation($event)"

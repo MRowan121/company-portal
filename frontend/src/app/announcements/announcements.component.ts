@@ -15,16 +15,13 @@ import {
   styleUrls: ['./announcements.component.css'],
 })
 export class AnnouncementsComponent implements OnInit {
-  isLoggedIn: boolean = false;
-  companyId: string | null = '';
-  userId: string | null = '';
   announcements: AnnouncementDto[] = [];
-  showForm: boolean = false;
+  companyId: string | null = '';
   error: string = '';
+  isLoggedIn: boolean = false;
+  showForm: boolean = false;
   user: any = {};
-
-  inputOne: string = 'Title';
-  inputTwo: string = 'Message';
+  userId: string | null = '';
 
   constructor(private router: Router) {}
 
@@ -53,8 +50,8 @@ export class AnnouncementsComponent implements OnInit {
 
   async onSubmit(formData: any) {
     const newAnnouncement = {
-      title: formData.Title,
-      message: formData.Message,
+      title: formData.name,
+      message: formData.description,
       author: {
         id: this.user.id,
         profile: this.user.profile,

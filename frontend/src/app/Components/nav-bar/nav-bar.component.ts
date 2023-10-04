@@ -12,10 +12,10 @@ import {
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  userName: string = '';
-  user: any = {};
   companyId: string | null = '';
+  user: any = {};
   userId: string | null = '';
+  userName: string = '';
 
   constructor() {}
 

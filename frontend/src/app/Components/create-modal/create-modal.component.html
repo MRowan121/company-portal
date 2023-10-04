@@ -6,18 +6,18 @@
     <form class="form-container">
       <input
         type="text"
-        id="inputOne"
-        [name]="inputOne"
+        id="name"
+        name="name"
         placeholder="{{ inputOne }}"
-        [(ngModel)]="formData[inputOne]"
+        [(ngModel)]="formData.name"
         required
       />
       <input
         type="text"
-        id="inputTwo"
-        [name]="inputTwo"
+        id="description"
+        name="description"
         placeholder="{{ inputTwo }}"
-        [(ngModel)]="formData[inputTwo]"
+        [(ngModel)]="formData.description"
         required
       />
     </form>

@@ -26,8 +26,8 @@
     </div>
   </div>
   <app-create-modal
-    [inputOne]="inputOne"
-    [inputTwo]="inputTwo"
+    [inputOne]="'Title'"
+    [inputTwo]="'Announcement'"
     *ngIf="showForm"
     (hideOverlay)="showOverlay()"
     (formSubmitted)="onSubmit($event)"
